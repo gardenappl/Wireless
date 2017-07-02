@@ -6,6 +6,7 @@ using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
+using Wireless.Items;
 
 namespace Wireless.Tiles
 {
@@ -173,7 +174,7 @@ namespace Wireless.Tiles
 		
 		public override void KillMultiTile(int i, int j, int frameX, int frameY)
 		{
-			Item.NewItem(i * 16, j * 16, 16, 32, mod.ItemType(Names.WirelessTransmitter));
+			Item.NewItem(i * 16, j * 16, 16, 32, mod.ItemType(GetType().Name));
 			if(WirelessWorld.Links.ContainsKey(new Point16(i, j)))
 			{
 				(mod as Wireless).SyncRemoveLink(new Point16(i, j + 1));
@@ -205,7 +206,9 @@ namespace Wireless.Tiles
 					player.showItemIcon = true;
 					player.noThrow = 2;
 					if(player.inventory[player.selectedItem].type != mod.ItemType(Names.CoordinateConfigurator))
-						player.showItemIcon2 = mod.ItemType(Names.WirelessTransmitter);
+					{
+						player.showItemIcon2 = mod.ItemType(GetType().Name);
+					}
 				}
 				else if(player.inventory[player.selectedItem].type == mod.ItemType(Names.CoordinateConfigurator))
 				{
@@ -217,10 +220,14 @@ namespace Wireless.Tiles
 		public bool IsReceiver(Point16 point)
 		{
 			if(point.X < 0 || point.X >= Main.tile.GetLength(0))
+			{
 				return false;
+			}
 			if(point.Y < 0 || point.Y >= Main.tile.GetLength(1))
+			{
 				return false;
-			var tile = Main.tile[point.X, point.Y];
+			}
+			var tile = Framing.GetTileSafely(point);
 			return tile.active() && tile.type == mod.TileType(Names.WirelessReceiver) && tile.frameY == 18;
 		}
 	}

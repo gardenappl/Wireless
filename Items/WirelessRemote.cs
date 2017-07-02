@@ -7,18 +7,24 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace Wireless.Items
 {
 	public class WirelessRemote : CoordinateConfigurator
 	{
+		public override void SetStaticDefaults()
+		{
+			DisplayName.AddTranslation(GameCulture.Russian, "Дистанционный пульт");
+			Tooltip.SetDefault("Sends signals to a linked Wireless Receiver");
+			Tooltip.AddTranslation(GameCulture.Russian, "Посылает сигналы связанному беспроводныму приёмнику");
+		}
+		
 		public override void SetDefaults()
 		{
-			item.name = "Wireless Remote";
 			item.width = 14;
 			item.height = 30;
-			AddTooltip("Sends signals to linked Wireless Receivers");
 			item.useAnimation = 30;
 			item.useTime = 30;
 			item.UseSound = new LegacySoundStyle(SoundID.Mech, 0);
@@ -40,13 +46,13 @@ namespace Wireless.Items
 		
 		public override bool CanUseItem(Player player)
 		{
-			if(DoesPlayerReach(player) && IsReceiver(new Point16(Player.tileTargetX, Player.tileTargetY)))
+			if(WirelessUtils.DoesPlayerReach(player) && IsReceiver(new Point16(Player.tileTargetX, Player.tileTargetY)))
 			{
 				item.UseSound = SoundID.Item1;
 				item.useStyle = 1;
 				return true;
 			}
-			if(IsReceiver(coord))
+			if(IsReceiver(Coordinates))
 			{
 				item.UseSound = new LegacySoundStyle(SoundID.Mech, 0);
 				item.useStyle = 4;
@@ -60,13 +66,13 @@ namespace Wireless.Items
 			var tileClicked = new Point16(Player.tileTargetX, Player.tileTargetY);
 			if(IsReceiver(tileClicked))
 			{
-				coord = tileClicked;
-				Main.NewText("Linked successfully!", Color.Green.R, Color.Green.G, Color.Green.B);
+				Coordinates = tileClicked;
+				Main.NewText(Language.GetTextValue("Mods.Wireless.SuccessLink"), Color.Green.R, Color.Green.G, Color.Green.B);
 				return true;
 			}
-			if(IsReceiver(coord))
+			if(IsReceiver(Coordinates))
 			{
-				(mod as Wireless).SyncActivate(coord);
+				(mod as Wireless).SyncActivate(Coordinates);
 				return true;
 			}
 			return false;
@@ -74,9 +80,9 @@ namespace Wireless.Items
 		
 		public override void ModifyTooltips(List<TooltipLine> tooltips)
 		{
-			if(coord.X > 0 && coord.Y > 0)
+			if(Coordinates.X > 0 && Coordinates.Y > 0)
 			{
-				tooltips.Insert(2, new TooltipLine(mod, "LinkingCoord", "Stored coordinates: " + coord));
+				tooltips.Insert(2, new TooltipLine(mod, "LinkingCoord", Language.GetTextValue("Mods.Wireless.StoredCoords", Coordinates)));
 			}
 		}
 	}

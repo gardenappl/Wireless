@@ -3,6 +3,7 @@ using System;
 using System.IO;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ID;
 
@@ -17,13 +18,20 @@ namespace Wireless
 			TripWire
 		}
 		
-		public Wireless()
+		public override void Load()
 		{
-			Properties = new ModProperties
-			{
-				Autoload = true,
-				AutoloadSounds = true
-			};
+			var text = CreateTranslation("StartLink");
+			text.SetDefault("Starting link...");
+			text.AddTranslation(GameCulture.Russian, "Координаты сохранены");
+			AddTranslation(text);
+			text = CreateTranslation("SuccessLink");
+			text.SetDefault("Linked successfully!");
+			text.AddTranslation(GameCulture.Russian, "Соединено успешно!");
+			AddTranslation(text);
+			text = CreateTranslation("StoredCoords");
+			text.SetDefault("Stored coordinates: {0}");
+			text.AddTranslation(GameCulture.Russian, "Сохранённые кординаты:");
+			AddTranslation(text);
 		}
 		
 		public override void HandlePacket(BinaryReader reader, int whoAmI)
