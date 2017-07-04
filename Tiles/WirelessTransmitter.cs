@@ -27,7 +27,7 @@ namespace Wireless.Tiles
 			if(WirelessWorld.Links.ContainsKey(new Point16(i, j)))
 			{
 				var coord = WirelessWorld.Links[new Point16(i, j)];
-				if(IsReceiver(coord))
+				if(WirelessUtils.IsReceiver(coord, mod))
 				{
 					//Code below is copied and adapted from Wiring.HitWire()
 					for (int side = 0; side < 4; side++)
@@ -187,11 +187,8 @@ namespace Wireless.Tiles
 			{
 				var coord = WirelessWorld.Links[new Point16(i, j)];
 //				Wiring.TripWire(i, j, 1, 1);
-				if(IsReceiver(coord))
-				{
-					Main.PlaySound(28, i * 16, j * 16, 0);
-					(mod as Wireless).SyncActivate(coord);
-				}
+				Main.PlaySound(28, i * 16, j * 16, 0);
+				(mod as Wireless).SyncActivate(coord);
 			}
 		}
 		
@@ -201,7 +198,7 @@ namespace Wireless.Tiles
 			
 			if(Main.tile[i, j].frameY == 18)
 			{
-				if(WirelessWorld.Links.ContainsKey(new Point16(i, j)) && IsReceiver(WirelessWorld.Links[new Point16(i, j)]))
+				if(WirelessWorld.Links.ContainsKey(new Point16(i, j)))
 				{
 					player.showItemIcon = true;
 					player.noThrow = 2;
@@ -215,20 +212,6 @@ namespace Wireless.Tiles
 					player.showItemIcon = true;
 				}
 			}
-		}
-		
-		public bool IsReceiver(Point16 point)
-		{
-			if(point.X < 0 || point.X >= Main.tile.GetLength(0))
-			{
-				return false;
-			}
-			if(point.Y < 0 || point.Y >= Main.tile.GetLength(1))
-			{
-				return false;
-			}
-			var tile = Framing.GetTileSafely(point);
-			return tile.active() && tile.type == mod.TileType(Names.WirelessReceiver) && tile.frameY == 18;
 		}
 	}
 }

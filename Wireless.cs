@@ -30,7 +30,7 @@ namespace Wireless
 			AddTranslation(text);
 			text = CreateTranslation("StoredCoords");
 			text.SetDefault("Stored coordinates: {0}");
-			text.AddTranslation(GameCulture.Russian, "Сохранённые кординаты:");
+			text.AddTranslation(GameCulture.Russian, "Сохранённые кординаты: {0}");
 			AddTranslation(text);
 		}
 		
@@ -44,7 +44,7 @@ namespace Wireless
 					var receiver = new Point16(reader.ReadInt16(), reader.ReadInt16());
 					
 					WirelessWorld.Links[transmitter] = receiver;
-					if(Main.netMode == 2) //Server-side
+					if(Main.netMode == NetmodeID.Server) //Server-side
 					{
 						SyncAddLink(transmitter, receiver, whoAmI); //Broadcast the change to other clients
 					}
@@ -53,13 +53,21 @@ namespace Wireless
 					transmitter = new Point16(reader.ReadInt16(), reader.ReadInt16());
 					
 					WirelessWorld.Links.Remove(transmitter);
-					if(Main.netMode == 2)
+					if(Main.netMode == NetmodeID.Server)
 					{
 						SyncRemoveLink(transmitter, whoAmI);
 					}
 					break;
 				case MessageType.TripWire:
-					Wiring.TripWire(reader.ReadInt16(), reader.ReadInt16(), 1, 1);
+					receiver = new Point16(reader.ReadInt16(), reader.ReadInt16());
+					if(WirelessUtils.IsReceiver(receiver, this))
+					{
+						Wiring.TripWire(receiver.X, receiver.Y, 1, 1);
+					}
+					if(Main.netMode == NetmodeID.Server)
+					{
+						RemoteClient.CheckSection(whoAmI, receiver.ToWorldCoordinates());
+					}
 					break;
 			}
 		}
@@ -104,7 +112,10 @@ namespace Wireless
 			}
 			else
 			{
-				Wiring.TripWire(receiver.X, receiver.Y, 1, 1);
+				if(WirelessUtils.IsReceiver(receiver, this))
+				{
+					Wiring.TripWire(receiver.X, receiver.Y, 1, 1);
+				}
 			}
 		}
 		

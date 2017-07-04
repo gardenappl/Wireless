@@ -45,20 +45,20 @@ namespace Wireless.Items
 		public override bool CanUseItem(Player player)
 		{
 			var tileClicked = new Point16(Player.tileTargetX, Player.tileTargetY);
-			return WirelessUtils.DoesPlayerReach(player) && (IsTransmitter(tileClicked) || IsReceiver(tileClicked));
+			return WirelessUtils.DoesPlayerReach(player) && (WirelessUtils.IsTransmitter(tileClicked, mod) || WirelessUtils.IsReceiver(tileClicked, mod));
 		}
 		
 		public override bool UseItem(Player player)
 		{
 			var tileClicked = new Point16(Player.tileTargetX, Player.tileTargetY);
-			if(IsTransmitter(tileClicked) && IsReceiver(Coordinates))
+			if(WirelessUtils.IsTransmitter(tileClicked, mod) && WirelessUtils.IsReceiver(Coordinates, mod))
 			{
 				(mod as Wireless).SyncAddLink(tileClicked, Coordinates);
 				Coordinates = Point16.NegativeOne;
 				Main.NewText(Language.GetTextValue("Mods.Wireless.SuccessLink"), Color.Green.R, Color.Green.G, Color.Green.B);
 				return true;
 			}
-			if(IsTransmitter(Coordinates) && IsReceiver(tileClicked))
+			if(WirelessUtils.IsTransmitter(Coordinates, mod) && WirelessUtils.IsReceiver(tileClicked, mod))
 			{
 				(mod as Wireless).SyncAddLink(Coordinates, tileClicked);
 				Coordinates = Point16.NegativeOne;
@@ -70,31 +70,11 @@ namespace Wireless.Items
 			return true;
 		}
 		
-		public bool IsReceiver(Point16 point)
-		{
-			if(!WorldGen.InWorld(point.X, point.Y))
-			{
-				return false;
-			}
-			var tile = Main.tile[point.X, point.Y];
-			return tile.active() && tile.type == mod.TileType(Names.WirelessReceiver) && tile.frameY == 18;
-		}
-		
-		public bool IsTransmitter(Point16 point)
-		{
-			if(!WorldGen.InWorld(point.X, point.Y))
-			{
-				return false;
-			}
-			var tile = Main.tile[point.X, point.Y];
-			return tile.active() && tile.type == mod.TileType(Names.WirelessTransmitter) && tile.frameY == 18;
-		}
-		
 		public override void ModifyTooltips(List<TooltipLine> tooltips)
 		{
 			if(Coordinates.X > 0 && Coordinates.Y > 0)
 			{
-				tooltips.Insert(3, new TooltipLine(mod, "LinkingCoord", Language.GetTextValue("Mods.Wireless.SavedCoords", Coordinates)));
+				tooltips.Insert(3, new TooltipLine(mod, "LinkingCoord", Language.GetTextValue("Mods.Wireless.StoredCoords", Coordinates)));
 			}
 		}
 		

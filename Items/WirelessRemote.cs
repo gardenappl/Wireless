@@ -46,13 +46,13 @@ namespace Wireless.Items
 		
 		public override bool CanUseItem(Player player)
 		{
-			if(WirelessUtils.DoesPlayerReach(player) && IsReceiver(new Point16(Player.tileTargetX, Player.tileTargetY)))
+			if(WirelessUtils.DoesPlayerReach(player) && WirelessUtils.IsReceiver(new Point16(Player.tileTargetX, Player.tileTargetY), mod))
 			{
 				item.UseSound = SoundID.Item1;
 				item.useStyle = 1;
 				return true;
 			}
-			if(IsReceiver(Coordinates))
+			if(Coordinates != Point16.NegativeOne)
 			{
 				item.UseSound = new LegacySoundStyle(SoundID.Mech, 0);
 				item.useStyle = 4;
@@ -64,13 +64,13 @@ namespace Wireless.Items
 		public override bool UseItem(Player player)
 		{
 			var tileClicked = new Point16(Player.tileTargetX, Player.tileTargetY);
-			if(IsReceiver(tileClicked))
+			if(WirelessUtils.IsReceiver(tileClicked, mod))
 			{
 				Coordinates = tileClicked;
 				Main.NewText(Language.GetTextValue("Mods.Wireless.SuccessLink"), Color.Green.R, Color.Green.G, Color.Green.B);
 				return true;
 			}
-			if(IsReceiver(Coordinates))
+			if(WirelessUtils.IsReceiver(Coordinates, mod))
 			{
 				(mod as Wireless).SyncActivate(Coordinates);
 				return true;
