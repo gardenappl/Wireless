@@ -32,6 +32,10 @@ namespace Wireless
 			text.SetDefault("Stored coordinates: {0}");
 			text.AddTranslation(GameCulture.Russian, "Сохранённые кординаты: {0}");
 			AddTranslation(text);
+			text = CreateTranslation("LinkToItself");
+			text.SetDefault("A Transciever cannot be linked to itself.");
+			text.AddTranslation(GameCulture.Russian, "Нельзя присоединить приёмопередатчик самому к себе.");
+			AddTranslation(text);
 		}
 		
 		public override void HandlePacket(BinaryReader reader, int whoAmI)
@@ -42,32 +46,24 @@ namespace Wireless
 				case MessageType.AddLink:
 					var transmitter = new Point16(reader.ReadInt16(), reader.ReadInt16());
 					var receiver = new Point16(reader.ReadInt16(), reader.ReadInt16());
-					
 					WirelessWorld.Links[transmitter] = receiver;
+					
 					if(Main.netMode == NetmodeID.Server) //Server-side
-					{
 						SyncAddLink(transmitter, receiver, whoAmI); //Broadcast the change to other clients
-					}
 					break;
 				case MessageType.RemoveLink:
 					transmitter = new Point16(reader.ReadInt16(), reader.ReadInt16());
-					
 					WirelessWorld.Links.Remove(transmitter);
+					
 					if(Main.netMode == NetmodeID.Server)
-					{
 						SyncRemoveLink(transmitter, whoAmI);
-					}
 					break;
 				case MessageType.TripWire:
 					receiver = new Point16(reader.ReadInt16(), reader.ReadInt16());
-					if(WirelessUtils.IsReceiver(receiver, this))
-					{
-						Wiring.TripWire(receiver.X, receiver.Y, 1, 1);
-					}
+					ActivateReceiver(receiver);
+					
 					if(Main.netMode == NetmodeID.Server)
-					{
 						RemoteClient.CheckSection(whoAmI, receiver.ToWorldCoordinates());
-					}
 					break;
 			}
 		}
@@ -112,10 +108,29 @@ namespace Wireless
 			}
 			else
 			{
-				if(WirelessUtils.IsReceiver(receiver, this))
-				{
-					Wiring.TripWire(receiver.X, receiver.Y, 1, 1);
-				}
+//				if(WirelessUtils.IsReceiver(receiver, this))
+//				{
+//					Wiring.TripWire(receiver.X, receiver.Y, 1, 1);
+//					int currentColor = Wiring._currentWireColor;
+//					for(int i = 1; i <= 4; i++)
+//					{
+//						Wiring._currentWireColor = i;
+//						if(Main.tile[receiver.X, receiver.Y].type == TileType(Names.WirelessTransceiver))
+//							GetTile(Names.WirelessTransceiver).HitWire(receiver.X, receiver.Y);
+//					}
+//					Wiring._currentWireColor = currentColor;
+//				}
+				ActivateReceiver(receiver);
+			}
+		}
+		
+		void ActivateReceiver(Point16 receiver)
+		{
+			if(WirelessUtils.IsReceiver(receiver, this))
+			{
+				Wiring.TripWire(receiver.X, receiver.Y, 1, 1);
+				if(Main.tile[receiver.X, receiver.Y].type == TileType(Names.WirelessTransceiver) && WirelessWorld.Links.ContainsKey(receiver))
+					Wiring.TripWire(WirelessWorld.Links[receiver].X, WirelessWorld.Links[receiver].Y, 1, 1);
 			}
 		}
 		

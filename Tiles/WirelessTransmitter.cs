@@ -175,7 +175,7 @@ namespace Wireless.Tiles
 		public override void KillMultiTile(int i, int j, int frameX, int frameY)
 		{
 			Item.NewItem(i * 16, j * 16, 16, 32, mod.ItemType(GetType().Name));
-			if(WirelessWorld.Links.ContainsKey(new Point16(i, j)))
+			if(WirelessWorld.Links.ContainsKey(new Point16(i, j + 1)))
 			{
 				(mod as Wireless).SyncRemoveLink(new Point16(i, j + 1));
 			}

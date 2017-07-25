@@ -67,7 +67,7 @@ namespace Wireless.Items
 			if(WirelessUtils.IsReceiver(tileClicked, mod))
 			{
 				Coordinates = tileClicked;
-				Main.NewText(Language.GetTextValue("Mods.Wireless.SuccessLink"), Color.Green.R, Color.Green.G, Color.Green.B);
+				Main.NewText(Language.GetTextValue("Mods.Wireless.SuccessLink"), Colors.RarityLime);
 				return true;
 			}
 			if(WirelessUtils.IsReceiver(Coordinates, mod))
@@ -80,10 +80,8 @@ namespace Wireless.Items
 		
 		public override void ModifyTooltips(List<TooltipLine> tooltips)
 		{
-			if(Coordinates.X > 0 && Coordinates.Y > 0)
-			{
+			if(Coordinates != Point16.NegativeOne)
 				tooltips.Insert(2, new TooltipLine(mod, "LinkingCoord", Language.GetTextValue("Mods.Wireless.StoredCoords", Coordinates)));
-			}
 		}
 	}
 }

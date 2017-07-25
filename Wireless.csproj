@@ -52,10 +52,12 @@
     <Compile Include="Items\CoordinateConfigurator.cs" />
     <Compile Include="Items\WirelessReceiver.cs" />
     <Compile Include="Items\WirelessRemote.cs" />
+    <Compile Include="Items\WirelessTransceiver.cs" />
     <Compile Include="Items\WirelessTransmitter.cs" />
     <Compile Include="Names.cs" />
     <Compile Include="ShopItems.cs" />
     <Compile Include="Tiles\WirelessReceiver.cs" />
+    <Compile Include="Tiles\WirelessTransceiver.cs" />
     <Compile Include="Tiles\WirelessTransmitter.cs" />
     <Compile Include="Wireless.cs" />
     <Compile Include="WirelessUtils.cs" />

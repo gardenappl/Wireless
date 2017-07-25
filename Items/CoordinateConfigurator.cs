@@ -51,31 +51,42 @@ namespace Wireless.Items
 		public override bool UseItem(Player player)
 		{
 			var tileClicked = new Point16(Player.tileTargetX, Player.tileTargetY);
+			if(Main.tile[Player.tileTargetX, Player.tileTargetY].type == mod.TileType(Names.WirelessTransceiver))
+			{
+				if(tileClicked == Coordinates)
+				{
+					Main.NewText(Language.GetTextValue("Mods.Wireless.LinkToItself"), Color.Red);
+					return true;
+				}
+			}
+			bool successLink = false;
 			if(WirelessUtils.IsTransmitter(tileClicked, mod) && WirelessUtils.IsReceiver(Coordinates, mod))
 			{
 				(mod as Wireless).SyncAddLink(tileClicked, Coordinates);
-				Coordinates = Point16.NegativeOne;
-				Main.NewText(Language.GetTextValue("Mods.Wireless.SuccessLink"), Color.Green.R, Color.Green.G, Color.Green.B);
-				return true;
+				successLink = true;
 			}
 			if(WirelessUtils.IsTransmitter(Coordinates, mod) && WirelessUtils.IsReceiver(tileClicked, mod))
 			{
 				(mod as Wireless).SyncAddLink(Coordinates, tileClicked);
-				Coordinates = Point16.NegativeOne;
-				Main.NewText(Language.GetTextValue("Mods.Wireless.SuccessLink"), Color.Green.R, Color.Green.G, Color.Green.B);
-				return true;
+				successLink = true;
 			}
-			Coordinates = tileClicked;
-			Main.NewText(Language.GetTextValue("Mods.Wireless.StartLink"), Color.YellowGreen.R, Color.YellowGreen.G, Color.YellowGreen.B);
+			if(successLink)
+			{
+				Coordinates = Point16.NegativeOne;
+				Main.NewText(Language.GetTextValue("Mods.Wireless.SuccessLink"), Colors.RarityLime);
+			}
+			else
+			{
+				Coordinates = tileClicked;
+				Main.NewText(Language.GetTextValue("Mods.Wireless.StartLink"), Colors.RarityYellow);
+			}
 			return true;
 		}
 		
 		public override void ModifyTooltips(List<TooltipLine> tooltips)
 		{
-			if(Coordinates.X > 0 && Coordinates.Y > 0)
-			{
+			if(Coordinates != Point16.NegativeOne)
 				tooltips.Insert(3, new TooltipLine(mod, "LinkingCoord", Language.GetTextValue("Mods.Wireless.StoredCoords", Coordinates)));
-			}
 		}
 		
 		public override void NetSend(BinaryWriter writer)

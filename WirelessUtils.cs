@@ -16,24 +16,26 @@ namespace Wireless
 				(player.position.Y + (float)player.height) / 16f + (float)Player.tileRangeY + (float)player.inventory[player.selectedItem].tileBoost - 2f + (float)player.blockRange >= (float)Player.tileTargetY;
 		}
 		
-		public static bool IsReceiver(Point16 point, Mod mod)
+		public static bool IsReceiver(Point16 point, Mod mod, bool notTransciever = false)
 		{
 			if(!WorldGen.InWorld(point.X, point.Y))
-			{
 				return false;
-			}
+			
 			var tile = Main.tile[point.X, point.Y];
-			return tile.active() && tile.type == mod.TileType(Names.WirelessReceiver) && tile.frameY == 18;
+			if(tile.active() && tile.frameY == 18)
+				return tile.type == mod.TileType(Names.WirelessReceiver) || (!notTransciever && tile.type == mod.TileType(Names.WirelessTransceiver));
+			return false;
 		}
 		
-		public static bool IsTransmitter(Point16 point, Mod mod)
+		public static bool IsTransmitter(Point16 point, Mod mod, bool notTransciever = false)
 		{
 			if(!WorldGen.InWorld(point.X, point.Y))
-			{
 				return false;
-			}
+			
 			var tile = Main.tile[point.X, point.Y];
-			return tile.active() && tile.type == mod.TileType(Names.WirelessTransmitter) && tile.frameY == 18;
+			if(tile.active() && tile.frameY == 18)
+				return tile.type == mod.TileType(Names.WirelessTransmitter) || (!notTransciever && tile.type == mod.TileType(Names.WirelessTransceiver));
+			return false;
 		}
 	}
 }
