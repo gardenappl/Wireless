@@ -138,5 +138,9 @@ namespace Wireless
 		{
 			ErrorLogger.Log("[Wireless] " + string.Format(message.ToString(), formatData));
 		}
+
+		//Hamstar's Mod Helpers integration
+		public static string GithubUserName { get { return "goldenapple3"; } }
+		public static string GithubProjectName { get { return "Wireless"; } }
 	}
 }

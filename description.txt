@@ -1,6 +1,5 @@
 ﻿Are you tired of running thousands of wires between teleporters? Or do you just want to make your wiring tidier?
 Then you're in luck, because Wireless is a (yet another) mod all about wireless signals!
 
-It adds Wireless Transmitters, Receivers, Transcievers and Remotes.
-
+It adds Wireless Transmitters, Receivers, Transceivers and Remotes.
 (please visit the forum thread for more info on how to use the mod)
