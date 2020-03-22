@@ -20,22 +20,7 @@ namespace Wireless
 		
 		public override void Load()
 		{
-			var text = CreateTranslation("StartLink");
-			text.SetDefault("Starting link...");
-			text.AddTranslation(GameCulture.Russian, "Координаты сохранены");
-			AddTranslation(text);
-			text = CreateTranslation("SuccessLink");
-			text.SetDefault("Linked successfully!");
-			text.AddTranslation(GameCulture.Russian, "Соединено успешно!");
-			AddTranslation(text);
-			text = CreateTranslation("StoredCoords");
-			text.SetDefault("Stored coordinates: {0}");
-			text.AddTranslation(GameCulture.Russian, "Сохранённые кординаты: {0}");
-			AddTranslation(text);
-			text = CreateTranslation("LinkToItself");
-			text.SetDefault("A Transciever cannot be linked to itself.");
-			text.AddTranslation(GameCulture.Russian, "Нельзя присоединить приёмопередатчик самому к себе.");
-			AddTranslation(text);
+
 		}
 		
 		public override void HandlePacket(BinaryReader reader, int whoAmI)
@@ -129,14 +114,14 @@ namespace Wireless
 			if(WirelessUtils.IsReceiver(receiver, this))
 			{
 				Wiring.TripWire(receiver.X, receiver.Y, 1, 1);
-				if(Main.tile[receiver.X, receiver.Y].type == TileType(Names.WirelessTransceiver) && WirelessWorld.Links.ContainsKey(receiver))
+				if(Main.tile[receiver.X, receiver.Y].type == ModContent.TileType<Tiles.WirelessTransceiver>() && WirelessWorld.Links.ContainsKey(receiver))
 					Wiring.TripWire(WirelessWorld.Links[receiver].X, WirelessWorld.Links[receiver].Y, 1, 1);
 			}
 		}
 		
 		public static void Log(object message, params object[] formatData)
 		{
-			ErrorLogger.Log("[Wireless] " + string.Format(message.ToString(), formatData));
+            ModContent.GetInstance<Wireless>().Logger.Info("[Wireless] " + string.Format(message.ToString(), formatData));
 		}
 
 		//Hamstar's Mod Helpers integration

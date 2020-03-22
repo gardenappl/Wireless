@@ -23,7 +23,7 @@ namespace Wireless
 			
 			var tile = Main.tile[point.X, point.Y];
 			if(tile.active() && tile.frameY == 18)
-				return tile.type == mod.TileType(Names.WirelessReceiver) || (!notTransciever && tile.type == mod.TileType(Names.WirelessTransceiver));
+				return tile.type == ModContent.TileType<Tiles.WirelessReceiver>() || (!notTransciever && tile.type == ModContent.TileType<Tiles.WirelessTransceiver>());
 			return false;
 		}
 		
@@ -34,7 +34,7 @@ namespace Wireless
 			
 			var tile = Main.tile[point.X, point.Y];
 			if(tile.active() && tile.frameY == 18)
-				return tile.type == mod.TileType(Names.WirelessTransmitter) || (!notTransciever && tile.type == mod.TileType(Names.WirelessTransceiver));
+				return tile.type == ModContent.TileType<Tiles.WirelessTransmitter>() || (!notTransciever && tile.type == ModContent.TileType<Tiles.WirelessTransceiver>());
 			return false;
 		}
 	}

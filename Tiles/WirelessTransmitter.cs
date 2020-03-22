@@ -166,7 +166,6 @@ namespace Wireless.Tiles
 								}
 							}
 						}
-						IL_315:;
 					}
 				}
 			}
@@ -177,19 +176,25 @@ namespace Wireless.Tiles
 			Item.NewItem(i * 16, j * 16, 16, 32, mod.ItemType(GetType().Name));
 			if(WirelessWorld.Links.ContainsKey(new Point16(i, j + 1)))
 			{
-				(mod as Wireless).SyncRemoveLink(new Point16(i, j + 1));
+				ModContent.GetInstance<Wireless>().SyncRemoveLink(new Point16(i, j + 1));
 			}
 		}
 		
-		public override void RightClick(int i, int j)
+		public override bool NewRightClick(int i, int j)
 		{
-			if(Main.tile[i, j].frameY == 18 && WirelessWorld.Links.ContainsKey(new Point16(i, j)))
-			{
-				var coord = WirelessWorld.Links[new Point16(i, j)];
-//				Wiring.TripWire(i, j, 1, 1);
-				Main.PlaySound(28, i * 16, j * 16, 0);
-				(mod as Wireless).SyncActivate(coord);
-			}
+            if (Main.tile[i, j].frameY == 18 && WirelessWorld.Links.ContainsKey(new Point16(i, j)))
+            {
+                var coord = WirelessWorld.Links[new Point16(i, j)];
+                //				Wiring.TripWire(i, j, 1, 1);
+                Main.PlaySound(28, i * 16, j * 16, 0);
+                ModContent.GetInstance<Wireless>().SyncActivate(coord);
+                return true;
+
+            }
+            else
+            {
+                return false;
+            }
 		}
 		
 		public override void MouseOver(int i, int j)
@@ -202,12 +207,12 @@ namespace Wireless.Tiles
 				{
 					player.showItemIcon = true;
 					player.noThrow = 2;
-					if(player.inventory[player.selectedItem].type != mod.ItemType(Names.CoordinateConfigurator))
+					if(player.inventory[player.selectedItem].type != ModContent.ItemType<Items.CoordinateConfigurator>())
 					{
 						player.showItemIcon2 = mod.ItemType(GetType().Name);
 					}
 				}
-				else if(player.inventory[player.selectedItem].type == mod.ItemType(Names.CoordinateConfigurator))
+				else if(player.inventory[player.selectedItem].type == ModContent.ItemType<Items.CoordinateConfigurator>())
 				{
 					player.showItemIcon = true;
 				}

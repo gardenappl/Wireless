@@ -16,9 +16,7 @@ namespace Wireless.Items
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.AddTranslation(GameCulture.Russian, "Дистанционный пульт");
-			Tooltip.SetDefault("Sends signals to a linked Wireless Receiver");
-			Tooltip.AddTranslation(GameCulture.Russian, "Посылает сигналы связанному беспроводныму приёмнику");
+
 		}
 		
 		public override void SetDefaults()
@@ -38,8 +36,8 @@ namespace Wireless.Items
 		{
 			var recipe = new ModRecipe(mod);
 			recipe.AddTile(TileID.TinkerersWorkbench);
-			recipe.AddIngredient(mod.ItemType(Names.CoordinateConfigurator));
-			recipe.AddIngredient(mod.ItemType(Names.WirelessTransmitter));
+			recipe.AddIngredient(ModContent.ItemType<CoordinateConfigurator>());
+			recipe.AddIngredient(ModContent.ItemType<WirelessTransmitter>());
 			recipe.SetResult(this);
 			recipe.AddRecipe();
 		}
@@ -72,7 +70,7 @@ namespace Wireless.Items
 			}
 			if(WirelessUtils.IsReceiver(Coordinates, mod))
 			{
-				(mod as Wireless).SyncActivate(Coordinates);
+				ModContent.GetInstance<Wireless>().SyncActivate(Coordinates);
 				return true;
 			}
 			return false;

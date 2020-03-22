@@ -1,0 +1,17 @@
+﻿
+StartLink=Координаты сохранены
+SuccessLink=Соединено успешно!
+StoredCoords=Сохранённые кординаты: {0}
+LinkToItself=Нельзя присоединить приёмопередатчик самому к себе.
+
+ItemName.CoordinateConfigurator=Конфигуратор координат
+ItemName.WirelessReceiver=Беспроводной приёмник
+ItemName.WirelessTransceiver=Беспроводной приёмопередатчик
+ItemName.WirelessTransmitter=Беспроводной передатчик
+ItemName.WirelessRemote=Дистанционный пульт
+
+ItemTooltip.WirelessRemote=Посылает сигналы связанному беспроводныму приёмнику
+ItemTooltip.WirelessTransmitter=Посылает сигналы связанному беспроводныму приёмнику
+ItemTooltip.WirelessTransceiver=Посылает и принимает сигналы от связанных устройств
+ItemTooltip.WirelessReceiver=Принимает сигналы от беспроводных передатчиков и дистанционных пультов
+ItemTooltip.CoordinateConfigurator=Связывает беспроводные передатчики и приёмники
