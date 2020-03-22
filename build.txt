@@ -5,4 +5,4 @@ homepage = http://forums.terraria.org/index.php?threads/wireless.48915/
 hideCode = false
 hideResources = false
 includeSource = true
-buildIgnore = *.csproj, obj\*, bin\*
+buildIgnore = build.txt, .gitattributes, .gitignore, .git/, .vs/, .idea/, bin/, obj/, Thumbs.db, *.csproj, .cs, .sln, readme.md
