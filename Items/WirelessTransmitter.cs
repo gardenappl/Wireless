@@ -11,9 +11,7 @@ namespace Wireless.Items
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.AddTranslation(GameCulture.Russian, "Беспроводной передатчик");
-			Tooltip.SetDefault("Sends signals to a linked Wireless Receiver");
-			Tooltip.AddTranslation(GameCulture.Russian, "Посылает сигналы связанному беспроводныму приёмнику");
+
 		}
 		
 		public override void SetDefaults()
@@ -27,7 +25,7 @@ namespace Wireless.Items
 			item.useTime = 10;
 			item.useStyle = 1;
 			item.consumable = true;
-			item.createTile = mod.TileType(GetType().Name);
+			item.createTile = ModContent.TileType<Tiles.WirelessTransmitter>();
 			item.value = Item.buyPrice(0, 2);
 			item.rare = 4;
 			item.mech = true;

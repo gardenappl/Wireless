@@ -1,8 +1,9 @@
 displayName = Wireless
 author = gardenapple
-version = 1.5
+version = 1.5.1
 homepage = http://forums.terraria.org/index.php?threads/wireless.48915/
-hideCode = false
 hideResources = false
+hideCode = false
 includeSource = true
-buildIgnore = *.csproj, obj\*, bin\*
+includePDB = true
+buildIgnore = .gitattributes, .gitignore, .git\*, .vs\*, .idea\*, bin\*, obj\*, Thumbs.db, readme.md

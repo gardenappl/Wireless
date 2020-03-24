@@ -32,8 +32,8 @@ namespace Wireless.Tiles
 		{
 			var player = Main.player[Main.myPlayer];
 			
-			if((player.inventory[player.selectedItem].type == mod.ItemType(Names.CoordinateConfigurator) ||
-				player.inventory[player.selectedItem].type == mod.ItemType(Names.WirelessRemote)) && Main.tile[i, j].frameY == 18)
+			if((player.inventory[player.selectedItem].type == ModContent.ItemType<Items.CoordinateConfigurator>() ||
+				player.inventory[player.selectedItem].type == ModContent.ItemType<Items.WirelessRemote>()) && Main.tile[i, j].frameY == 18)
 			{
 				player.showItemIcon = true;
 			}

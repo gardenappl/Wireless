@@ -23,9 +23,7 @@ namespace Wireless.Items
 		
 		public override void SetStaticDefaults()
 		{
-			Tooltip.SetDefault("Links Wireless Transmitters to Wireless Receivers");
-			DisplayName.AddTranslation(GameCulture.Russian, "Конфигуратор координат");
-			Tooltip.AddTranslation(GameCulture.Russian, "Связывает беспроводные передатчики и приёмники");
+
 		}
 		
 		public override void SetDefaults()
@@ -51,7 +49,7 @@ namespace Wireless.Items
 		public override bool UseItem(Player player)
 		{
 			var tileClicked = new Point16(Player.tileTargetX, Player.tileTargetY);
-			if(Main.tile[Player.tileTargetX, Player.tileTargetY].type == mod.TileType(Names.WirelessTransceiver))
+			if(Main.tile[Player.tileTargetX, Player.tileTargetY].type == ModContent.TileType<Tiles.WirelessTransceiver>())
 			{
 				if(tileClicked == Coordinates)
 				{
@@ -62,12 +60,12 @@ namespace Wireless.Items
 			bool successLink = false;
 			if(WirelessUtils.IsTransmitter(tileClicked, mod) && WirelessUtils.IsReceiver(Coordinates, mod))
 			{
-				(mod as Wireless).SyncAddLink(tileClicked, Coordinates);
+				ModContent.GetInstance<Wireless>().SyncAddLink(tileClicked, Coordinates);
 				successLink = true;
 			}
 			if(WirelessUtils.IsTransmitter(Coordinates, mod) && WirelessUtils.IsReceiver(tileClicked, mod))
 			{
-				(mod as Wireless).SyncAddLink(Coordinates, tileClicked);
+				ModContent.GetInstance<Wireless>().SyncAddLink(Coordinates, tileClicked);
 				successLink = true;
 			}
 			if(successLink)

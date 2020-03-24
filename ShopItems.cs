@@ -13,11 +13,11 @@ namespace Wireless
 			switch(type)
 			{
 				case NPCID.Steampunker:
-					shop.item[nextSlot].SetDefaults(mod.ItemType(Names.WirelessTransmitter));
+					shop.item[nextSlot].SetDefaults(ModContent.ItemType<Items.WirelessTransmitter>());
 					nextSlot++;
-					shop.item[nextSlot].SetDefaults(mod.ItemType(Names.WirelessReceiver));
+					shop.item[nextSlot].SetDefaults(ModContent.ItemType<Items.WirelessReceiver>());
 					nextSlot++;
-					shop.item[nextSlot].SetDefaults(mod.ItemType(Names.CoordinateConfigurator));
+					shop.item[nextSlot].SetDefaults(ModContent.ItemType<Items.CoordinateConfigurator>());
 					nextSlot++;
 					break;
 			}

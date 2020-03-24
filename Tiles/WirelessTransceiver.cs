@@ -18,13 +18,13 @@ namespace Wireless.Tiles
 					Main.LocalPlayer.noThrow = 2;
 					
 					int itemType = Main.LocalPlayer.HeldItem.type;
-					if(itemType != mod.ItemType(Names.CoordinateConfigurator) && itemType != mod.ItemType(Names.WirelessRemote))
+					if(itemType != ModContent.ItemType<Items.WirelessRemote>() && itemType != ModContent.ItemType<Items.CoordinateConfigurator>())
 						Main.LocalPlayer.showItemIcon2 = mod.ItemType(GetType().Name);
 				}
 				else
 				{
 					int itemType = Main.LocalPlayer.HeldItem.type;
-					if(itemType == mod.ItemType(Names.WirelessRemote) || itemType == mod.ItemType(Names.CoordinateConfigurator))
+					if(itemType == ModContent.ItemType<Items.WirelessRemote>() || itemType == ModContent.ItemType<Items.CoordinateConfigurator>())
 						Main.LocalPlayer.showItemIcon = true;
 				}
 			}

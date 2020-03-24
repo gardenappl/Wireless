@@ -1,0 +1,16 @@
+﻿LinkToItself=A Transciever cannot be linked to itself.
+StoredCoords=Stored coordinates: {0}
+SuccessLink=Linked successfully!
+StartLink=Starting link...
+
+ItemName.WirelessReceiver=Wireless Receiver
+ItemName.WirelessTransmitter=Wireless Transmitter
+ItemName.WirelessTransceiver=Wireless Transceiver
+ItemName.WirelessRemote=Wireless Remote
+ItemName.CoordinateConfigurator=Coordinate Configurator
+
+ItemTooltip.WirelessTransmitter=Sends signals to a linked Wireless Receiver
+ItemTooltip.CoordinateConfigurator=Links Wireless Transmitters to Wireless Receivers
+ItemTooltip.WirelessReceiver=Receives signals from linked Wireless Transmitters and Remotes
+ItemTooltip.WirelessRemote=Sends signals to a linked Wireless Receiver
+ItemTooltip.WirelessTransceiver=Sends and receives signals from linked devices
