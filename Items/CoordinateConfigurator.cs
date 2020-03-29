@@ -43,7 +43,7 @@ namespace Wireless.Items
 		public override bool CanUseItem(Player player)
 		{
 			var tileClicked = new Point16(Player.tileTargetX, Player.tileTargetY);
-			return WirelessUtils.DoesPlayerReach(player) && (WirelessUtils.IsTransmitter(tileClicked, mod) || WirelessUtils.IsReceiver(tileClicked, mod));
+			return WirelessUtils.DoesPlayerReach(player) && (WirelessUtils.IsTransmitter(tileClicked) || WirelessUtils.IsReceiver(tileClicked));
 		}
 		
 		public override bool UseItem(Player player)
@@ -58,12 +58,12 @@ namespace Wireless.Items
 				}
 			}
 			bool successLink = false;
-			if(WirelessUtils.IsTransmitter(tileClicked, mod) && WirelessUtils.IsReceiver(Coordinates, mod))
+			if(WirelessUtils.IsTransmitter(tileClicked) && WirelessUtils.IsReceiver(Coordinates))
 			{
 				ModContent.GetInstance<Wireless>().SyncAddLink(tileClicked, Coordinates);
 				successLink = true;
 			}
-			if(WirelessUtils.IsTransmitter(Coordinates, mod) && WirelessUtils.IsReceiver(tileClicked, mod))
+			if(WirelessUtils.IsTransmitter(Coordinates) && WirelessUtils.IsReceiver(tileClicked))
 			{
 				ModContent.GetInstance<Wireless>().SyncAddLink(Coordinates, tileClicked);
 				successLink = true;

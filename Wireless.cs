@@ -111,13 +111,23 @@ namespace Wireless
 		
 		void ActivateReceiver(Point16 receiver)
 		{
-			if(WirelessUtils.IsReceiver(receiver, this))
-			{
-				Wiring.TripWire(receiver.X, receiver.Y, 1, 1);
-				if(Main.tile[receiver.X, receiver.Y].type == ModContent.TileType<Tiles.WirelessTransceiver>() && WirelessWorld.Links.ContainsKey(receiver))
-					Wiring.TripWire(WirelessWorld.Links[receiver].X, WirelessWorld.Links[receiver].Y, 1, 1);
+			if(WirelessUtils.IsReceiver(receiver))
+			{   
+                Wiring.TripWire(receiver.X, receiver.Y, 1, 1);
+                Tile tile = Main.tile[receiver.X, receiver.Y];
+                if (tile.type == ModContent.TileType<Tiles.WirelessTransceiver>() && WirelessWorld.Links.ContainsKey(receiver))
+                {
+                    if (WirelessUtils.IsReceiver(WirelessWorld.Links[receiver]))
+                    {
+                        Wiring.TripWire(WirelessWorld.Links[receiver].X, WirelessWorld.Links[receiver].Y, 1, 1);
+                    }
+                }
 			}
-		}
+            else
+            {
+                SyncRemoveLink(receiver);
+            }
+        }
 		
 		public static void Log(object message, params object[] formatData)
 		{

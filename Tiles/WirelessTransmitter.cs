@@ -27,7 +27,7 @@ namespace Wireless.Tiles
 			if(WirelessWorld.Links.ContainsKey(new Point16(i, j)))
 			{
 				var coord = WirelessWorld.Links[new Point16(i, j)];
-				if(WirelessUtils.IsReceiver(coord, mod))
+				if(WirelessUtils.IsReceiver(coord))
 				{
 					//Code below is copied and adapted from Wiring.HitWire()
 					for (int side = 0; side < 4; side++)
