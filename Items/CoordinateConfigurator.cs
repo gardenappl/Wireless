@@ -1,5 +1,4 @@
 ﻿
-using System;
 using System.Collections.Generic;
 using System.IO;
 using Microsoft.Xna.Framework;
@@ -19,11 +18,6 @@ namespace Wireless.Items
 		public override bool CloneNewInstances
 		{
 			get { return true; }
-		}
-		
-		public override void SetStaticDefaults()
-		{
-
 		}
 		
 		public override void SetDefaults()

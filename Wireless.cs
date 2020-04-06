@@ -1,26 +1,19 @@
 ﻿
-using System;
 using System.IO;
 using Terraria;
 using Terraria.DataStructures;
-using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ID;
 
 namespace Wireless
 {
-	public class Wireless : Mod
+    public class Wireless : Mod
 	{
 		public enum MessageType : byte
 		{
 			AddLink,
 			RemoveLink,
 			TripWire
-		}
-		
-		public override void Load()
-		{
-
 		}
 		
 		public override void HandlePacket(BinaryReader reader, int whoAmI)

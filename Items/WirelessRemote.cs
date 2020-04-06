@@ -1,8 +1,5 @@
 ﻿
-using System;
 using System.Collections.Generic;
-using System.IO;
-using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -14,10 +11,6 @@ namespace Wireless.Items
 {
 	public class WirelessRemote : CoordinateConfigurator
 	{
-		public override void SetStaticDefaults()
-		{
-
-		}
 		
 		public override void SetDefaults()
 		{

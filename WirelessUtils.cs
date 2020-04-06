@@ -1,5 +1,4 @@
 ﻿
-using System;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ModLoader;
@@ -16,25 +15,25 @@ namespace Wireless
 				(player.position.Y + (float)player.height) / 16f + (float)Player.tileRangeY + (float)player.inventory[player.selectedItem].tileBoost - 2f + (float)player.blockRange >= (float)Player.tileTargetY;
 		}
 		
-		public static bool IsReceiver(Point16 point, bool notTransciever = false)
+		public static bool IsReceiver(Point16 point)
 		{
 			if(!WorldGen.InWorld(point.X, point.Y))
 				return false;
 			
 			Tile tile = Main.tile[point.X, point.Y];
 			if(tile.active() && tile.frameY == 18)
-				return tile.type == ModContent.TileType<Tiles.WirelessReceiver>() || (!notTransciever && tile.type == ModContent.TileType<Tiles.WirelessTransceiver>());
+				return (tile.type == ModContent.TileType<Tiles.WirelessReceiver>()) || (tile.type == ModContent.TileType<Tiles.WirelessTransceiver>());
 			return false;
 		}
 		
-		public static bool IsTransmitter(Point16 point, bool notTransciever = false)
+		public static bool IsTransmitter(Point16 point)
 		{
 			if(!WorldGen.InWorld(point.X, point.Y))
 				return false;
 			
 			Tile tile = Main.tile[point.X, point.Y];
 			if(tile.active() && tile.frameY == 18)
-				return tile.type == ModContent.TileType<Tiles.WirelessTransmitter>() || (!notTransciever && tile.type == ModContent.TileType<Tiles.WirelessTransceiver>());
+				return (tile.type == ModContent.TileType<Tiles.WirelessTransmitter>()) || (tile.type == ModContent.TileType<Tiles.WirelessTransceiver>());
 			return false;
 		}
 	}
