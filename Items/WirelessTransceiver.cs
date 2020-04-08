@@ -1,18 +1,14 @@
 ﻿
 using System;
 using Terraria;
+
 using Terraria.ID;
-using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace Wireless.Items
 {
 	public class WirelessTransceiver : ModItem
 	{
-		public override void SetStaticDefaults()
-		{
-
-		}
 		
 		public override void SetDefaults()
 		{

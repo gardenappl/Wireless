@@ -1,8 +1,5 @@
 ﻿
-using System;
 using System.Collections.Generic;
-using System.IO;
-using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -14,10 +11,6 @@ namespace Wireless.Items
 {
 	public class WirelessRemote : CoordinateConfigurator
 	{
-		public override void SetStaticDefaults()
-		{
-
-		}
 		
 		public override void SetDefaults()
 		{
@@ -44,7 +37,7 @@ namespace Wireless.Items
 		
 		public override bool CanUseItem(Player player)
 		{
-			if(WirelessUtils.DoesPlayerReach(player) && WirelessUtils.IsReceiver(new Point16(Player.tileTargetX, Player.tileTargetY), mod))
+			if(WirelessUtils.DoesPlayerReach(player) && WirelessUtils.IsReceiver(new Point16(Player.tileTargetX, Player.tileTargetY)))
 			{
 				item.UseSound = SoundID.Item1;
 				item.useStyle = 1;
@@ -62,13 +55,13 @@ namespace Wireless.Items
 		public override bool UseItem(Player player)
 		{
 			var tileClicked = new Point16(Player.tileTargetX, Player.tileTargetY);
-			if(WirelessUtils.IsReceiver(tileClicked, mod))
+			if(WirelessUtils.IsReceiver(tileClicked))
 			{
 				Coordinates = tileClicked;
 				Main.NewText(Language.GetTextValue("Mods.Wireless.SuccessLink"), Colors.RarityLime);
 				return true;
 			}
-			if(WirelessUtils.IsReceiver(Coordinates, mod))
+			if(WirelessUtils.IsReceiver(Coordinates))
 			{
 				ModContent.GetInstance<Wireless>().SyncActivate(Coordinates);
 				return true;

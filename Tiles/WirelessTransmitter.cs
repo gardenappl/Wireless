@@ -1,12 +1,9 @@
 ﻿
-using System;
-using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
-using Wireless.Items;
 
 namespace Wireless.Tiles
 {
@@ -27,7 +24,7 @@ namespace Wireless.Tiles
 			if(WirelessWorld.Links.ContainsKey(new Point16(i, j)))
 			{
 				var coord = WirelessWorld.Links[new Point16(i, j)];
-				if(WirelessUtils.IsReceiver(coord, mod))
+				if(WirelessUtils.IsReceiver(coord))
 				{
 					//Code below is copied and adapted from Wiring.HitWire()
 					for (int side = 0; side < 4; side++)

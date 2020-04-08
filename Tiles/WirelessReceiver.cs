@@ -1,10 +1,8 @@
 ﻿
-using System;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
-using Wireless.Items;
 
 namespace Wireless.Tiles
 {
