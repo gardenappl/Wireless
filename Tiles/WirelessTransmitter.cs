@@ -4,12 +4,13 @@ using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
+using Terraria.Audio;
 
 namespace Wireless.Tiles
 {
 	public class WirelessTransmitter : ModTile
 	{
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			Main.tileFrameImportant[Type] = true;
 			Main.tileLavaDeath[Type] = false;
@@ -21,9 +22,9 @@ namespace Wireless.Tiles
 		
 		public override void HitWire(int i, int j)
 		{
-			if(WirelessWorld.Links.ContainsKey(new Point16(i, j)))
+			if(WirelessSystem.Links.ContainsKey(new Point16(i, j)))
 			{
-				var coord = WirelessWorld.Links[new Point16(i, j)];
+				var coord = WirelessSystem.Links[new Point16(i, j)];
 				if(WirelessUtils.IsReceiver(coord))
 				{
 					//Code below is copied and adapted from Wiring.HitWire()
@@ -119,16 +120,16 @@ namespace Wireless.Tiles
 									switch (Wiring._currentWireColor)
 									{
 										case 1:
-											flag = tile.wire();
+											flag = (tile.sTileHeader & 128) == 128; // Tile.Wire()
 											break;
 										case 2:
-											flag = tile.wire2();
+											flag = (tile.sTileHeader & 256) == 256;
 											break;
 										case 3:
-											flag = tile.wire3();
+											flag = (tile.sTileHeader & 512) == 512;
 											break;
 										case 4:
-											flag = tile.wire4();
+											flag = (tile.bTileHeader & 128) == 128;
 											break;
 										default:
 											flag = false;
@@ -170,20 +171,20 @@ namespace Wireless.Tiles
 		
 		public override void KillMultiTile(int i, int j, int frameX, int frameY)
 		{
-			Item.NewItem(i * 16, j * 16, 16, 32, mod.ItemType(GetType().Name));
-			if(WirelessWorld.Links.ContainsKey(new Point16(i, j + 1)))
+			Item.NewItem(i * 16, j * 16, 16, 32, ModContent.ItemType<Items.WirelessTransmitter>());
+			if(WirelessSystem.Links.ContainsKey(new Point16(i, j + 1)))
 			{
 				ModContent.GetInstance<Wireless>().SyncRemoveLink(new Point16(i, j + 1));
 			}
 		}
 		
-		public override bool NewRightClick(int i, int j)
+		public override bool RightClick(int i, int j)
 		{
-            if (Main.tile[i, j].frameY == 18 && WirelessWorld.Links.ContainsKey(new Point16(i, j)))
+            if (Main.tile[i, j].frameY == 18 && WirelessSystem.Links.ContainsKey(new Point16(i, j)))
             {
-                var coord = WirelessWorld.Links[new Point16(i, j)];
-                //				Wiring.TripWire(i, j, 1, 1);
-                Main.PlaySound(28, i * 16, j * 16, 0);
+                var coord = WirelessSystem.Links[new Point16(i, j)];
+				//				Wiring.TripWire(i, j, 1, 1);
+				SoundEngine.PlaySound(28, i * 16, j * 16, 0);
                 ModContent.GetInstance<Wireless>().SyncActivate(coord);
                 return true;
 
@@ -200,18 +201,18 @@ namespace Wireless.Tiles
 			
 			if(Main.tile[i, j].frameY == 18)
 			{
-				if(WirelessWorld.Links.ContainsKey(new Point16(i, j)))
+				if(WirelessSystem.Links.ContainsKey(new Point16(i, j)))
 				{
-					player.showItemIcon = true;
+					player.cursorItemIconEnabled = true;
 					player.noThrow = 2;
 					if(player.inventory[player.selectedItem].type != ModContent.ItemType<Items.CoordinateConfigurator>())
 					{
-						player.showItemIcon2 = mod.ItemType(GetType().Name);
+						player.cursorItemIconID = ModContent.ItemType<Items.WirelessTransmitter>();
 					}
 				}
 				else if(player.inventory[player.selectedItem].type == ModContent.ItemType<Items.CoordinateConfigurator>())
 				{
-					player.showItemIcon = true;
+					player.cursorItemIconEnabled = true;
 				}
 			}
 		}

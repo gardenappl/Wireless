@@ -22,16 +22,19 @@ namespace Wireless
 			switch(msgType)
 			{
 				case MessageType.AddLink:
-					var transmitter = new Point16(reader.ReadInt16(), reader.ReadInt16());
-					var receiver = new Point16(reader.ReadInt16(), reader.ReadInt16());
-					WirelessWorld.Links[transmitter] = receiver;
 					
-					if(Main.netMode == NetmodeID.Server) //Server-side
-						SyncAddLink(transmitter, receiver, whoAmI); //Broadcast the change to other clients
+						var transmitter = new Point16(reader.ReadInt16(), reader.ReadInt16());
+						var receiver = new Point16(reader.ReadInt16(), reader.ReadInt16());
+					if (!WirelessSystem.Links.ContainsKey(receiver))
+					{
+						WirelessSystem.Links[transmitter] = receiver;
+						if(Main.netMode == NetmodeID.Server) //Server-side
+							SyncAddLink(transmitter, receiver, whoAmI); //Broadcast the change to other clients
+					}
 					break;
 				case MessageType.RemoveLink:
 					transmitter = new Point16(reader.ReadInt16(), reader.ReadInt16());
-					WirelessWorld.Links.Remove(transmitter);
+					WirelessSystem.Links.Remove(transmitter);
 					
 					if(Main.netMode == NetmodeID.Server)
 						SyncRemoveLink(transmitter, whoAmI);
@@ -48,8 +51,8 @@ namespace Wireless
 		
 		public void SyncAddLink(Point16 transmitter, Point16 receiver, int ignoreClient = -1)
 		{
-			WirelessWorld.Links[transmitter] = receiver;
-			if(Main.netMode != 0)
+			WirelessSystem.Links[transmitter] = receiver;
+			if(Main.netMode != NetmodeID.SinglePlayer)
 			{
 				var msg = GetPacket();
 				msg.Write((byte)MessageType.AddLink);
@@ -63,8 +66,8 @@ namespace Wireless
 		
 		public void SyncRemoveLink(Point16 transmitter, int ignoreClient = -1)
 		{
-			WirelessWorld.Links.Remove(transmitter);
-			if(Main.netMode != 0)
+			WirelessSystem.Links.Remove(transmitter);
+			if(Main.netMode != NetmodeID.SinglePlayer)
 			{
 				var msg = GetPacket();
 				msg.Write((byte)MessageType.RemoveLink);
@@ -76,7 +79,7 @@ namespace Wireless
 		
 		public void SyncActivate(Point16 receiver)
 		{
-			if(Main.netMode == 1)
+			if(Main.netMode == NetmodeID.MultiplayerClient)
 			{
 				var msg = GetPacket();
 				msg.Write((byte)MessageType.TripWire);
@@ -108,11 +111,11 @@ namespace Wireless
 			{   
                 Wiring.TripWire(receiver.X, receiver.Y, 1, 1);
                 Tile tile = Main.tile[receiver.X, receiver.Y];
-                if (tile.type == ModContent.TileType<Tiles.WirelessTransceiver>() && WirelessWorld.Links.ContainsKey(receiver))
+                if (tile.type == ModContent.TileType<Tiles.WirelessTransceiver>() && WirelessSystem.Links.ContainsKey(receiver))
                 {
-                    if (WirelessUtils.IsReceiver(WirelessWorld.Links[receiver]))
+                    if (WirelessUtils.IsReceiver(WirelessSystem.Links[receiver]))
                     {
-                        Wiring.TripWire(WirelessWorld.Links[receiver].X, WirelessWorld.Links[receiver].Y, 1, 1);
+                        Wiring.TripWire(WirelessSystem.Links[receiver].X, WirelessSystem.Links[receiver].Y, 1, 1);
                     }
                 }
 			}

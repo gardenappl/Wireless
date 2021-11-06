@@ -1,0 +1,24 @@
+Mods: {
+	Wireless: {
+		LinkToItself: A Transciever cannot be linked to itself.
+		StoredCoords: Stored coordinates: {0}
+		SuccessLink: Linked successfully!
+		StartLink: Starting link...
+
+		ItemName: {
+			WirelessReceiver: Wireless Receiver
+			WirelessTransmitter: Wireless Transmitter
+			WirelessTransceiver: Wireless Transceiver
+			WirelessRemote: Wireless Remote
+			CoordinateConfigurator: Coordinate Configurator
+		}
+
+		ItemTooltip: {
+			WirelessTransmitter: Sends signals to a linked Wireless Receiver
+			CoordinateConfigurator: Links Wireless Transmitters to Wireless Receivers
+			WirelessReceiver: Receives signals from linked Wireless Transmitters and Remotes
+			WirelessRemote: Sends signals to a linked Wireless Receiver
+			WirelessTransceiver: Sends and receives signals from linked devices
+		}
+	}
+}
