@@ -21,7 +21,7 @@ namespace Wireless
 				return false;
 			
 			Tile tile = Main.tile[point.X, point.Y];
-			if(tile.active() && tile.frameY == 18)
+			if(tile.IsActive && tile.frameY == 18)
 				return (tile.type == ModContent.TileType<Tiles.WirelessReceiver>()) || (tile.type == ModContent.TileType<Tiles.WirelessTransceiver>());
 			return false;
 		}
@@ -32,7 +32,7 @@ namespace Wireless
 				return false;
 			
 			Tile tile = Main.tile[point.X, point.Y];
-			if(tile.active() && tile.frameY == 18)
+			if(tile.IsActive && tile.frameY == 18)
 				return (tile.type == ModContent.TileType<Tiles.WirelessTransmitter>()) || (tile.type == ModContent.TileType<Tiles.WirelessTransceiver>());
 			return false;
 		}

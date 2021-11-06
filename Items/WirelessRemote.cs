@@ -14,45 +14,44 @@ namespace Wireless.Items
 		
 		public override void SetDefaults()
 		{
-			item.width = 14;
-			item.height = 30;
-			item.useAnimation = 30;
-			item.useTime = 30;
-			item.UseSound = new LegacySoundStyle(SoundID.Mech, 0);
-			item.useStyle = 4;
-			item.value = Item.sellPrice(0, 2);
-			item.rare = 5;
-			item.mech = true;
+			Item.width = 14;
+			Item.height = 30;
+			Item.useAnimation = 30;
+			Item.useTime = 30;
+			Item.UseSound = new LegacySoundStyle(SoundID.Mech, 0);
+			Item.useStyle = ItemUseStyleID.HoldUp;
+			Item.value = Item.sellPrice(0, 2);
+			Item.rare = ItemRarityID.Pink;
+			Item.mech = true;
 		}
 		
 		public override void AddRecipes()
 		{
-			var recipe = new ModRecipe(mod);
-			recipe.AddTile(TileID.TinkerersWorkbench);
-			recipe.AddIngredient(ModContent.ItemType<CoordinateConfigurator>());
-			recipe.AddIngredient(ModContent.ItemType<WirelessTransmitter>());
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+				CreateRecipe()
+					.AddTile(TileID.TinkerersWorkbench)
+					.AddIngredient(ModContent.ItemType<WirelessTransmitter>(), 1)
+					.AddIngredient(ModContent.ItemType<CoordinateConfigurator>(), 1)
+					.Register();
 		}
 		
 		public override bool CanUseItem(Player player)
 		{
 			if(WirelessUtils.DoesPlayerReach(player) && WirelessUtils.IsReceiver(new Point16(Player.tileTargetX, Player.tileTargetY)))
 			{
-				item.UseSound = SoundID.Item1;
-				item.useStyle = 1;
+				Item.UseSound = SoundID.Item1;
+				Item.useStyle = ItemUseStyleID.Swing;
 				return true;
 			}
 			if(Coordinates != Point16.NegativeOne)
 			{
-				item.UseSound = new LegacySoundStyle(SoundID.Mech, 0);
-				item.useStyle = 4;
+				Item.UseSound = new LegacySoundStyle(SoundID.Mech, 0);
+				Item.useStyle = ItemUseStyleID.HoldUp;
 				return true;
 			}
 			return false;
 		}
 		
-		public override bool UseItem(Player player)
+		public override bool? UseItem(Player player)
 		{
 			var tileClicked = new Point16(Player.tileTargetX, Player.tileTargetY);
 			if(WirelessUtils.IsReceiver(tileClicked))
@@ -72,7 +71,7 @@ namespace Wireless.Items
 		public override void ModifyTooltips(List<TooltipLine> tooltips)
 		{
 			if(Coordinates != Point16.NegativeOne)
-				tooltips.Insert(2, new TooltipLine(mod, "LinkingCoord", Language.GetTextValue("Mods.Wireless.StoredCoords", Coordinates)));
+				tooltips.Insert(2, new TooltipLine(Mod, "LinkingCoord", Language.GetTextValue("Mods.Wireless.StoredCoords", Coordinates)));
 		}
 	}
 }

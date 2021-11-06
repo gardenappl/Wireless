@@ -1,0 +1,24 @@
+Mods: {
+	Wireless: {
+		StartLink: Координаты сохранены
+		SuccessLink: Соединено успешно!
+		StoredCoords: Сохранённые кординаты: {0}
+		LinkToItself: Нельзя присоединить приёмопередатчик самому к себе.
+
+		ItemName: {
+			CoordinateConfigurator: Конфигуратор координат
+			WirelessReceiver: Беспроводной приёмник
+			WirelessTransceiver: Беспроводной приёмопередатчик
+			WirelessTransmitter: Беспроводной передатчик
+			WirelessRemote: Дистанционный пульт
+		}
+
+		ItemTooltip: {
+			WirelessRemote: Посылает сигналы связанному беспроводныму приёмнику
+			WirelessTransmitter: Посылает сигналы связанному беспроводныму приёмнику
+			WirelessTransceiver: Посылает и принимает сигналы от связанных устройств
+			WirelessReceiver: Принимает сигналы от беспроводных передатчиков и дистанционных пультов
+			CoordinateConfigurator: Связывает беспроводные передатчики и приёмники
+		}
+	}
+}

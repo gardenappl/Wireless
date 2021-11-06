@@ -8,7 +8,7 @@ namespace Wireless.Tiles
 {
 	public class WirelessReceiver : ModTile
 	{
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			Main.tileFrameImportant[Type] = true;
 			Main.tileLavaDeath[Type] = false;
@@ -23,7 +23,7 @@ namespace Wireless.Tiles
 		
 		public override void KillMultiTile(int i, int j, int frameX, int frameY)
 		{
-			Item.NewItem(i * 16, j * 16, 16, 32, mod.ItemType(GetType().Name));
+			Item.NewItem(i * 16, j * 16, 16, 32, ModContent.ItemType<Items.WirelessReceiver>());
 		}
 		
 		public override void MouseOver(int i, int j)
@@ -33,7 +33,7 @@ namespace Wireless.Tiles
 			if((player.inventory[player.selectedItem].type == ModContent.ItemType<Items.CoordinateConfigurator>() ||
 				player.inventory[player.selectedItem].type == ModContent.ItemType<Items.WirelessRemote>()) && Main.tile[i, j].frameY == 18)
 			{
-				player.showItemIcon = true;
+				player.cursorItemIconEnabled = true;
 			}
 		}
 	}

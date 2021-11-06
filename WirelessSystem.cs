@@ -8,11 +8,11 @@ using Terraria.ModLoader.IO;
 
 namespace Wireless
 {
-	public class WirelessWorld : ModWorld
+	public class WirelessSystem : ModSystem
 	{
 		public static Dictionary<Point16, Point16> Links;
 		
-		public override void Initialize()
+		public override void OnWorldLoad()
 		{
 			Links = new Dictionary<Point16, Point16>();
 		}
@@ -20,7 +20,7 @@ namespace Wireless
 		//Don't ask me why I'm torturing myself by doing it this way...
 		//I could've just used an int array...
 		//Or a list of bytes... But I guess I'm just masochistic :/
-		public override TagCompound Save()
+		public override void SaveWorldData(TagCompound tag)
 		{
 			byte[] bytes = new byte[Links.Count * 8];
 			int i = 0;
@@ -36,41 +36,37 @@ namespace Wireless
 				bytes[i + 7] = BitConverter.GetBytes(kvp.Value.Y)[1];
 				i += 8;
 			}
-			return new TagCompound
-			{
-				{"coords", bytes}
-			};
+			tag["WirelessCoords"] = bytes;
 		}
 		
-		public override void Load(TagCompound tag)
+		public override void LoadWorldData(TagCompound tag)
 		{
-//			Wireless.Log("LOAD");
-			
-			byte[] bytes = tag.GetByteArray("coords");
-			for(int i = 0; i < bytes.Length; i += 8)
+			byte[] bytes = tag.GetByteArray("WirelessCoords");
+			for (int i = 0; i < bytes.Length; i += 8)
 			{
 				var transmitter = new Point16(BitConverter.ToInt16(bytes, i), BitConverter.ToInt16(bytes, i + 2));
 				var receiver = new Point16(BitConverter.ToInt16(bytes, i + 4), BitConverter.ToInt16(bytes, i + 6));
-//				Wireless.Log("{0}, {1}", transmitter, receiver);
-				Links.Add(transmitter, receiver);
+				//				Wireless.Log("{0}, {1}", transmitter, receiver);
+				if (!WirelessSystem.Links.ContainsKey(receiver))
+					Links.Add(transmitter, receiver);
 			}
 		}
 		
-		public override void LoadLegacy(BinaryReader reader)
-		{
+//		public override void LoadLegacy(BinaryReader reader)
+//		{
 //			Wireless.Log("LOAD LEGACY");
 			
-			int version = reader.ReadInt32();
+//			int version = reader.ReadInt32();
 			
-			int linksCount = reader.ReadInt32();
-			for(int i = 0; i < linksCount; i++)
-			{
-				var transmitter = new Point16(reader.ReadInt16(), reader.ReadInt16());
-				var receiver = new Point16(reader.ReadInt16(), reader.ReadInt16());
+//			int linksCount = reader.ReadInt32();
+//			for(int i = 0; i < linksCount; i++)
+//			{
+//				var transmitter = new Point16(reader.ReadInt16(), reader.ReadInt16());
+//				var receiver = new Point16(reader.ReadInt16(), reader.ReadInt16());
 //				Wireless.Log("{0}, {1}", transmitter, receiver);
-				Links.Add(transmitter, receiver);
-			}
-		}
+//				Links.Add(transmitter, receiver);
+//			}
+//		}
 		
 		public override void NetSend(BinaryWriter writer)
 		{
