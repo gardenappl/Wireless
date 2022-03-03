@@ -12,7 +12,7 @@ namespace Wireless
 	{
 		public static Dictionary<Point16, Point16> Links;
 		
-		public override void OnWorldLoad()
+		public override void OnModLoad()
 		{
 			Links = new Dictionary<Point16, Point16>();
 		}
@@ -24,9 +24,9 @@ namespace Wireless
 		{
 			byte[] bytes = new byte[Links.Count * 8];
 			int i = 0;
-			foreach(var kvp in Links)
+			foreach (var kvp in Links)
 			{
-				bytes[i]     = BitConverter.GetBytes(kvp.Key.X)[0];
+				bytes[i] = BitConverter.GetBytes(kvp.Key.X)[0];
 				bytes[i + 1] = BitConverter.GetBytes(kvp.Key.X)[1];
 				bytes[i + 2] = BitConverter.GetBytes(kvp.Key.Y)[0];
 				bytes[i + 3] = BitConverter.GetBytes(kvp.Key.Y)[1];
@@ -47,7 +47,7 @@ namespace Wireless
 				var transmitter = new Point16(BitConverter.ToInt16(bytes, i), BitConverter.ToInt16(bytes, i + 2));
 				var receiver = new Point16(BitConverter.ToInt16(bytes, i + 4), BitConverter.ToInt16(bytes, i + 6));
 				//				Wireless.Log("{0}, {1}", transmitter, receiver);
-				if (!WirelessSystem.Links.ContainsKey(receiver))
+				if (!WirelessUtils.AlreadyExists(transmitter, receiver))
 					Links.Add(transmitter, receiver);
 			}
 		}
@@ -84,8 +84,14 @@ namespace Wireless
 		{
 			int linksCount = reader.ReadInt32();
 			Links = new Dictionary<Point16, Point16>(linksCount);
-			for(int i = 0; i < linksCount; i++)
-				Links.Add(new Point16(reader.ReadInt16(), reader.ReadInt16()), new Point16(reader.ReadInt16(), reader.ReadInt16()));
+			for (int i = 0; i < linksCount; i++)
+            {
+				Point16 transmitter = new Point16(reader.ReadInt16(), reader.ReadInt16());
+				Point16 receiver = new Point16(reader.ReadInt16(), reader.ReadInt16());
+				if (!WirelessUtils.AlreadyExists(transmitter, receiver))
+					Links.Add(new Point16(reader.ReadInt16(), reader.ReadInt16()), new Point16(reader.ReadInt16(), reader.ReadInt16()));
+			}
+				
 		}
 	}
 }

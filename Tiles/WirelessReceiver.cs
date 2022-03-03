@@ -23,7 +23,7 @@ namespace Wireless.Tiles
 		
 		public override void KillMultiTile(int i, int j, int frameX, int frameY)
 		{
-			Item.NewItem(i * 16, j * 16, 16, 32, ModContent.ItemType<Items.WirelessReceiver>());
+			Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 32, ModContent.ItemType<Items.WirelessReceiver>());
 		}
 		
 		public override void MouseOver(int i, int j)
@@ -31,7 +31,7 @@ namespace Wireless.Tiles
 			var player = Main.player[Main.myPlayer];
 			
 			if((player.inventory[player.selectedItem].type == ModContent.ItemType<Items.CoordinateConfigurator>() ||
-				player.inventory[player.selectedItem].type == ModContent.ItemType<Items.WirelessRemote>()) && Main.tile[i, j].frameY == 18)
+				player.inventory[player.selectedItem].type == ModContent.ItemType<Items.WirelessRemote>()) && Main.tile[i, j].TileFrameY == 18)
 			{
 				player.cursorItemIconEnabled = true;
 			}

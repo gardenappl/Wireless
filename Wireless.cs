@@ -23,9 +23,9 @@ namespace Wireless
 			{
 				case MessageType.AddLink:
 					
-						var transmitter = new Point16(reader.ReadInt16(), reader.ReadInt16());
-						var receiver = new Point16(reader.ReadInt16(), reader.ReadInt16());
-					if (!WirelessSystem.Links.ContainsKey(receiver))
+					var transmitter = new Point16(reader.ReadInt16(), reader.ReadInt16());
+					var receiver = new Point16(reader.ReadInt16(), reader.ReadInt16());
+					if (!WirelessUtils.AlreadyExists(transmitter, receiver))
 					{
 						WirelessSystem.Links[transmitter] = receiver;
 						if(Main.netMode == NetmodeID.Server) //Server-side
@@ -111,7 +111,7 @@ namespace Wireless
 			{   
                 Wiring.TripWire(receiver.X, receiver.Y, 1, 1);
                 Tile tile = Main.tile[receiver.X, receiver.Y];
-                if (tile.type == ModContent.TileType<Tiles.WirelessTransceiver>() && WirelessSystem.Links.ContainsKey(receiver))
+                if (tile.TileType == ModContent.TileType<Tiles.WirelessTransceiver>() && WirelessSystem.Links.ContainsKey(receiver))
                 {
                     if (WirelessUtils.IsReceiver(WirelessSystem.Links[receiver]))
                     {

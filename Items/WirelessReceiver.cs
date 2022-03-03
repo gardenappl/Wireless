@@ -2,13 +2,18 @@
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-
+using Terraria.GameContent.Creative;
 
 namespace Wireless.Items
 {
 	public class WirelessReceiver : ModItem
 	{
-		
+
+		public override void SetStaticDefaults()
+		{
+			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 5;
+		}
+
 		public override void SetDefaults()
 		{
 			Item.width = 16;

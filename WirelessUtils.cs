@@ -21,8 +21,8 @@ namespace Wireless
 				return false;
 			
 			Tile tile = Main.tile[point.X, point.Y];
-			if(tile.IsActive && tile.frameY == 18)
-				return (tile.type == ModContent.TileType<Tiles.WirelessReceiver>()) || (tile.type == ModContent.TileType<Tiles.WirelessTransceiver>());
+			if(tile.HasTile && tile.TileFrameY == 18)
+				return (tile.TileType == ModContent.TileType<Tiles.WirelessReceiver>()) || (tile.TileType == ModContent.TileType<Tiles.WirelessTransceiver>());
 			return false;
 		}
 		
@@ -32,9 +32,17 @@ namespace Wireless
 				return false;
 			
 			Tile tile = Main.tile[point.X, point.Y];
-			if(tile.IsActive && tile.frameY == 18)
-				return (tile.type == ModContent.TileType<Tiles.WirelessTransmitter>()) || (tile.type == ModContent.TileType<Tiles.WirelessTransceiver>());
+			if(tile.HasTile && tile.TileFrameY == 18)
+				return (tile.TileType == ModContent.TileType<Tiles.WirelessTransmitter>()) || (tile.TileType == ModContent.TileType<Tiles.WirelessTransceiver>());
 			return false;
 		}
+
+		public static bool AlreadyExists(Point16 key, Point16 value)
+        {
+			if (WirelessSystem.Links.ContainsKey(key))
+				return WirelessSystem.Links.ContainsValue(value);
+			return false;
+        }
+
 	}
 }

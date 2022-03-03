@@ -1,7 +1,7 @@
 ﻿
 using System;
 using Terraria;
-
+using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -9,7 +9,11 @@ namespace Wireless.Items
 {
 	public class WirelessTransceiver : ModItem
 	{
-		
+		public override void SetStaticDefaults()
+		{
+			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 5;
+		}
+
 		public override void SetDefaults()
 		{
 
