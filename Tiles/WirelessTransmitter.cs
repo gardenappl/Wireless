@@ -58,19 +58,19 @@ namespace Wireless.Tiles
 						if (nextI >= 2 && nextI < Main.maxTilesX - 2 && nextJ >= 2 && nextJ < Main.maxTilesY - 2)
 						{
 							var tile = Main.tile[nextI, nextJ];
-							if (tile != null)
+							if (tile.HasTile)
 							{
 								var receiverTile = Main.tile[coord.X, coord.Y];
-								if (receiverTile != null)
+								if (receiverTile.HasTile)
 								{
 									byte b = 4;
-									if (tile.type == TileID.WirePipe || tile.type == TileID.PixelBox)
+									if (tile.TileType == TileID.WirePipe || tile.TileType == TileID.PixelBox)
 									{
 										b = 0;
 									}
-//										if (receiverTile.type == TileID.WirePipe)
+//										if (receivertile.TileType == TileID.WirePipe)
 //										{
-//											switch (receiverTile.frameX / 18)
+//											switch (receivertile.TileFrameX / 18)
 //											{
 //												case 0:
 //													if (side != wireDirection)
@@ -99,7 +99,7 @@ namespace Wireless.Tiles
 //													break;
 //											}
 //										}
-//										if (receiverTile.type == TileID.PixelBox)
+//										if (receivertile.TileType == TileID.PixelBox)
 //										{
 //											if (side != wireDirection)
 //											{
@@ -120,16 +120,16 @@ namespace Wireless.Tiles
 									switch (Wiring._currentWireColor)
 									{
 										case 1:
-											flag = (tile.sTileHeader & 128) == 128; // Tile.Wire()
+											flag = tile.RedWire; // Tile.Wire()
 											break;
 										case 2:
-											flag = (tile.sTileHeader & 256) == 256;
+											flag = tile.GreenWire;
 											break;
 										case 3:
-											flag = (tile.sTileHeader & 512) == 512;
+											flag = tile.BlueWire;
 											break;
 										case 4:
-											flag = (tile.bTileHeader & 128) == 128;
+											flag = tile.YellowWire;
 											break;
 										default:
 											flag = false;
@@ -171,7 +171,7 @@ namespace Wireless.Tiles
 		
 		public override void KillMultiTile(int i, int j, int frameX, int frameY)
 		{
-			Item.NewItem(i * 16, j * 16, 16, 32, ModContent.ItemType<Items.WirelessTransmitter>());
+			Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 32, ModContent.ItemType<Items.WirelessTransmitter>());
 			if(WirelessSystem.Links.ContainsKey(new Point16(i, j + 1)))
 			{
 				ModContent.GetInstance<Wireless>().SyncRemoveLink(new Point16(i, j + 1));
@@ -180,7 +180,7 @@ namespace Wireless.Tiles
 		
 		public override bool RightClick(int i, int j)
 		{
-            if (Main.tile[i, j].frameY == 18 && WirelessSystem.Links.ContainsKey(new Point16(i, j)))
+            if (Main.tile[i, j].TileFrameY == 18 && WirelessSystem.Links.ContainsKey(new Point16(i, j)))
             {
                 var coord = WirelessSystem.Links[new Point16(i, j)];
 				//				Wiring.TripWire(i, j, 1, 1);
@@ -199,7 +199,7 @@ namespace Wireless.Tiles
 		{
 			var player = Main.player[Main.myPlayer];
 			
-			if(Main.tile[i, j].frameY == 18)
+			if(Main.tile[i, j].TileFrameY == 18)
 			{
 				if(WirelessSystem.Links.ContainsKey(new Point16(i, j)))
 				{

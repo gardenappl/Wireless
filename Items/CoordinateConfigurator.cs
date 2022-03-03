@@ -8,13 +8,18 @@ using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
+using Terraria.GameContent.Creative;
 
 namespace Wireless.Items
 {
 	public class CoordinateConfigurator : ModItem
 	{
 		protected Point16 Coordinates = Point16.NegativeOne;
-		
+		public override void SetStaticDefaults()
+		{
+			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+		}
+
 		public override ModItem Clone(Item item)
 		{
 			CoordinateConfigurator clone = (CoordinateConfigurator)base.Clone(item);
@@ -45,7 +50,7 @@ namespace Wireless.Items
 		public override bool? UseItem(Player player)
 		{
 			var tileClicked = new Point16(Player.tileTargetX, Player.tileTargetY);
-			if(Main.tile[Player.tileTargetX, Player.tileTargetY].type == ModContent.TileType<Tiles.WirelessTransceiver>())
+			if(Main.tile[Player.tileTargetX, Player.tileTargetY].TileType == ModContent.TileType<Tiles.WirelessTransceiver>())
 			{
 				if(tileClicked == Coordinates)
 				{
