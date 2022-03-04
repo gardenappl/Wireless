@@ -37,10 +37,10 @@ namespace Wireless
 			return false;
 		}
 
-		public static bool AlreadyExists(Point16 key, Point16 value)
+		public static bool AlreadyExists(Point16 transmitter, Point16 reciever)
         {
-			if (WirelessSystem.Links.ContainsKey(key))
-				return WirelessSystem.Links.ContainsValue(value);
+			if (WirelessSystem.Links.ContainsKey(transmitter))
+				return WirelessSystem.Links.ContainsValue(reciever);
 			return false;
         }
 
