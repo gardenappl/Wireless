@@ -40,7 +40,7 @@ namespace Wireless
 		public static bool AlreadyExists(Point16 transmitter, Point16 reciever)
         {
 			if (WirelessSystem.Links.ContainsKey(transmitter))
-				return WirelessSystem.Links.ContainsValue(reciever);
+				return WirelessSystem.Links[transmitter] == reciever;
 			return false;
         }
 
