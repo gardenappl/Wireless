@@ -16,11 +16,16 @@ namespace Wireless
 		{
 			Links = new Dictionary<Point16, Point16>();
 		}
-		
-		//Don't ask me why I'm torturing myself by doing it this way...
-		//I could've just used an int array...
-		//Or a list of bytes... But I guess I'm just masochistic :/
-		public override void SaveWorldData(TagCompound tag)
+
+        public override void OnWorldUnload()
+        {
+            Links.Clear();
+        }
+
+        //Don't ask me why I'm torturing myself by doing it this way...
+        //I could've just used an int array...
+        //Or a list of bytes... But I guess I'm just masochistic :/
+        public override void SaveWorldData(TagCompound tag)
 		{
 			byte[] bytes = new byte[Links.Count * 8];
 			int i = 0;
