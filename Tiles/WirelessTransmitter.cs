@@ -123,10 +123,10 @@ namespace Wireless.Tiles
 											flag = tile.RedWire; // Tile.Wire()
 											break;
 										case 2:
-											flag = tile.GreenWire;
+											flag = tile.BlueWire;
 											break;
 										case 3:
-											flag = tile.BlueWire;
+											flag = tile.GreenWire;
 											break;
 										case 4:
 											flag = tile.YellowWire;

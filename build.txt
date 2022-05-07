@@ -1,6 +1,6 @@
 displayName = Wireless
 author = gardenapple
-version = 1.5.10
+version = 1.5.11
 homepage = http://forums.terraria.org/index.php?threads/wireless.48915/
 hideResources = false
 hideCode = false
