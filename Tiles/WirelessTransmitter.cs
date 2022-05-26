@@ -5,6 +5,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 using Terraria.Audio;
+using Microsoft.Xna.Framework;
 
 namespace Wireless.Tiles
 {
@@ -19,13 +20,13 @@ namespace Wireless.Tiles
 			TileObjectData.newTile.CoordinateHeights = new []{16, 16};
 			TileObjectData.addTile(Type);
 		}
-		
+
 		public override void HitWire(int i, int j)
 		{
-			if(WirelessSystem.Links.ContainsKey(new Point16(i, j)))
+			if (WirelessSystem.Links.ContainsKey(new Point16(i, j)))
 			{
 				var coord = WirelessSystem.Links[new Point16(i, j)];
-				if(WirelessUtils.IsReceiver(coord))
+				if (WirelessUtils.IsReceiver(coord))
 				{
 					//Code below is copied and adapted from Wiring.HitWire()
 					for (int side = 0; side < 4; side++)
@@ -68,54 +69,54 @@ namespace Wireless.Tiles
 									{
 										b = 0;
 									}
-//										if (receivertile.TileType == TileID.WirePipe)
-//										{
-//											switch (receivertile.TileFrameX / 18)
-//											{
-//												case 0:
-//													if (side != wireDirection)
-//													{
-//														goto IL_315;
-//													}
-//													break;
-//												case 1:
-//													if ((wireDirection != 0 || side != 3) && (wireDirection != 3 || side != 0) && (wireDirection != 1 || side != 2))
-//													{
-//														if (wireDirection != 2)
-//														{
-//															goto IL_315;
-//														}
-//														if (side != 1)
-//														{
-//															goto IL_315;
-//														}
-//													}
-//													break;
-//												case 2:
-//													if ((wireDirection != 0 || side != 2) && (wireDirection != 2 || side != 0) && (wireDirection != 1 || side != 3) && (wireDirection != 3 || side != 1))
-//													{
-//														goto IL_315;
-//													}
-//													break;
-//											}
-//										}
-//										if (receivertile.TileType == TileID.PixelBox)
-//										{
-//											if (side != wireDirection)
-//											{
-//												goto IL_315;
-//											}
-//											if (Wiring._PixelBoxTriggers.ContainsKey(point2))
-//											{
-//												Dictionary<Point16, byte> pixelBoxTriggers;
-//												Point16 key;
-//												(pixelBoxTriggers = Wiring._PixelBoxTriggers)[key = point2] = (pixelBoxTriggers[key] | ((side == 0 | side == 1) ? 2 : 1));
-//											}
-//											else
-//											{
-//												Wiring._PixelBoxTriggers[point2] = ((side == 0 | side == 1) ? 2 : 1);
-//											}
-//										}
+									//										if (receivertile.TileType == TileID.WirePipe)
+									//										{
+									//											switch (receivertile.TileFrameX / 18)
+									//											{
+									//												case 0:
+									//													if (side != wireDirection)
+									//													{
+									//														goto IL_315;
+									//													}
+									//													break;
+									//												case 1:
+									//													if ((wireDirection != 0 || side != 3) && (wireDirection != 3 || side != 0) && (wireDirection != 1 || side != 2))
+									//													{
+									//														if (wireDirection != 2)
+									//														{
+									//															goto IL_315;
+									//														}
+									//														if (side != 1)
+									//														{
+									//															goto IL_315;
+									//														}
+									//													}
+									//													break;
+									//												case 2:
+									//													if ((wireDirection != 0 || side != 2) && (wireDirection != 2 || side != 0) && (wireDirection != 1 || side != 3) && (wireDirection != 3 || side != 1))
+									//													{
+									//														goto IL_315;
+									//													}
+									//													break;
+									//											}
+									//										}
+									//										if (receivertile.TileType == TileID.PixelBox)
+									//										{
+									//											if (side != wireDirection)
+									//											{
+									//												goto IL_315;
+									//											}
+									//											if (Wiring._PixelBoxTriggers.ContainsKey(point2))
+									//											{
+									//												Dictionary<Point16, byte> pixelBoxTriggers;
+									//												Point16 key;
+									//												(pixelBoxTriggers = Wiring._PixelBoxTriggers)[key = point2] = (pixelBoxTriggers[key] | ((side == 0 | side == 1) ? 2 : 1));
+									//											}
+									//											else
+									//											{
+									//												Wiring._PixelBoxTriggers[point2] = ((side == 0 | side == 1) ? 2 : 1);
+									//											}
+									//										}
 									bool flag;
 									switch (Wiring._currentWireColor)
 									{
@@ -168,7 +169,7 @@ namespace Wireless.Tiles
 				}
 			}
 		}
-		
+
 		public override void KillMultiTile(int i, int j, int frameX, int frameY)
 		{
 			Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 32, ModContent.ItemType<Items.WirelessTransmitter>());
@@ -184,8 +185,9 @@ namespace Wireless.Tiles
             {
                 var coord = WirelessSystem.Links[new Point16(i, j)];
 				//				Wiring.TripWire(i, j, 1, 1);
-				SoundEngine.PlaySound(28, i * 16, j * 16, 0);
-                ModContent.GetInstance<Wireless>().SyncActivate(coord);
+			    Vector2? position = new(i * 16, j * 16);
+			    SoundEngine.PlaySound(SoundID.Mech, position);
+			    ModContent.GetInstance<Wireless>().SyncActivate(coord);
                 return true;
 
             }

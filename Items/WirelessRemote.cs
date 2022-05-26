@@ -18,7 +18,7 @@ namespace Wireless.Items
 			Item.height = 30;
 			Item.useAnimation = 30;
 			Item.useTime = 30;
-			Item.UseSound = new LegacySoundStyle(SoundID.Mech, 0);
+			Item.UseSound = SoundID.Mech;
 			Item.useStyle = ItemUseStyleID.HoldUp;
 			Item.value = Item.sellPrice(0, 2);
 			Item.rare = ItemRarityID.Pink;
@@ -44,7 +44,7 @@ namespace Wireless.Items
 			}
 			if(Coordinates != Point16.NegativeOne)
 			{
-				Item.UseSound = new LegacySoundStyle(SoundID.Mech, 0);
+				Item.UseSound = SoundID.Mech;
 				Item.useStyle = ItemUseStyleID.HoldUp;
 				return true;
 			}
