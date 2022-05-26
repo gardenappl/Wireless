@@ -69,54 +69,54 @@ namespace Wireless.Tiles
 									{
 										b = 0;
 									}
-									//										if (receivertile.TileType == TileID.WirePipe)
-									//										{
-									//											switch (receivertile.TileFrameX / 18)
-									//											{
-									//												case 0:
-									//													if (side != wireDirection)
-									//													{
-									//														goto IL_315;
-									//													}
-									//													break;
-									//												case 1:
-									//													if ((wireDirection != 0 || side != 3) && (wireDirection != 3 || side != 0) && (wireDirection != 1 || side != 2))
-									//													{
-									//														if (wireDirection != 2)
-									//														{
-									//															goto IL_315;
-									//														}
-									//														if (side != 1)
-									//														{
-									//															goto IL_315;
-									//														}
-									//													}
-									//													break;
-									//												case 2:
-									//													if ((wireDirection != 0 || side != 2) && (wireDirection != 2 || side != 0) && (wireDirection != 1 || side != 3) && (wireDirection != 3 || side != 1))
-									//													{
-									//														goto IL_315;
-									//													}
-									//													break;
-									//											}
-									//										}
-									//										if (receivertile.TileType == TileID.PixelBox)
-									//										{
-									//											if (side != wireDirection)
-									//											{
-									//												goto IL_315;
-									//											}
-									//											if (Wiring._PixelBoxTriggers.ContainsKey(point2))
-									//											{
-									//												Dictionary<Point16, byte> pixelBoxTriggers;
-									//												Point16 key;
-									//												(pixelBoxTriggers = Wiring._PixelBoxTriggers)[key = point2] = (pixelBoxTriggers[key] | ((side == 0 | side == 1) ? 2 : 1));
-									//											}
-									//											else
-									//											{
-									//												Wiring._PixelBoxTriggers[point2] = ((side == 0 | side == 1) ? 2 : 1);
-									//											}
-									//										}
+//										if (receivertile.TileType == TileID.WirePipe)
+//										{
+//											switch (receivertile.TileFrameX / 18)
+//											{
+//												case 0:
+//													if (side != wireDirection)
+//													{
+//														goto IL_315;
+//													}
+//													break;
+//												case 1:
+//													if ((wireDirection != 0 || side != 3) && (wireDirection != 3 || side != 0) && (wireDirection != 1 || side != 2))
+//													{
+//														if (wireDirection != 2)
+//														{
+//															goto IL_315;
+//														}
+//														if (side != 1)
+//														{
+//															goto IL_315;
+//														}
+//													}
+//													break;
+//												case 2:
+//													if ((wireDirection != 0 || side != 2) && (wireDirection != 2 || side != 0) && (wireDirection != 1 || side != 3) && (wireDirection != 3 || side != 1))
+//													{
+//														goto IL_315;
+//													}
+//													break;
+//											}
+//										}
+//										if (receivertile.TileType == TileID.PixelBox)
+//										{
+//											if (side != wireDirection)
+//											{
+//												goto IL_315;
+//											}
+//											if (Wiring._PixelBoxTriggers.ContainsKey(point2))
+//											{
+//												Dictionary<Point16, byte> pixelBoxTriggers;
+//												Point16 key;
+//												(pixelBoxTriggers = Wiring._PixelBoxTriggers)[key = point2] = (pixelBoxTriggers[key] | ((side == 0 | side == 1) ? 2 : 1));
+//											}
+//											else
+//											{
+//												Wiring._PixelBoxTriggers[point2] = ((side == 0 | side == 1) ? 2 : 1);
+//											}
+//										}
 									bool flag;
 									switch (Wiring._currentWireColor)
 									{
