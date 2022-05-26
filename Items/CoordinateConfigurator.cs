@@ -20,13 +20,6 @@ namespace Wireless.Items
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
 
-		public override ModItem Clone(Item item)
-		{
-			CoordinateConfigurator clone = (CoordinateConfigurator)base.Clone(item);
-			clone.Coordinates = Point16.NegativeOne;
-			return clone;
-		}
-
 		public override void SetDefaults()
 		{
 			Item.width = 14;
