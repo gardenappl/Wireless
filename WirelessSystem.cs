@@ -91,12 +91,11 @@ namespace Wireless
 			Links = new Dictionary<Point16, Point16>(linksCount);
 			for (int i = 0; i < linksCount; i++)
             {
-				Point16 transmitter = new Point16(reader.ReadInt16(), reader.ReadInt16());
-				Point16 receiver = new Point16(reader.ReadInt16(), reader.ReadInt16());
+				Point16 transmitter = new (reader.ReadInt16(), reader.ReadInt16());
+				Point16 receiver = new (reader.ReadInt16(), reader.ReadInt16());
 				if (!WirelessUtils.AlreadyExists(transmitter, receiver))
-					Links.Add(new Point16(reader.ReadInt16(), reader.ReadInt16()), new Point16(reader.ReadInt16(), reader.ReadInt16()));
+					Links.Add(transmitter, receiver);
 			}
-				
 		}
 	}
 }
