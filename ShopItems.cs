@@ -7,17 +7,14 @@ namespace Wireless
 {
 	public class ShopItems : GlobalNPC
 	{
-		public override void SetupShop(int type, Chest shop, ref int nextSlot)
+		public override void ModifyShop(NPCShop shop)
 		{
-			switch(type)
+			switch(shop.NpcType)
 			{
 				case NPCID.Steampunker:
-					shop.item[nextSlot].SetDefaults(ModContent.ItemType<Items.WirelessTransmitter>());
-					nextSlot++;
-					shop.item[nextSlot].SetDefaults(ModContent.ItemType<Items.WirelessReceiver>());
-					nextSlot++;
-					shop.item[nextSlot].SetDefaults(ModContent.ItemType<Items.CoordinateConfigurator>());
-					nextSlot++;
+					shop.Add(ModContent.ItemType<Items.WirelessTransmitter>());
+					shop.Add(ModContent.ItemType<Items.WirelessReceiver>());
+					shop.Add(ModContent.ItemType<Items.CoordinateConfigurator>());
 					break;
 			}
 		}
