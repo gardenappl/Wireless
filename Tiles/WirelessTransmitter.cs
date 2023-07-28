@@ -172,7 +172,6 @@ namespace Wireless.Tiles
 
 		public override void KillMultiTile(int i, int j, int frameX, int frameY)
 		{
-			Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 32, ModContent.ItemType<Items.WirelessTransmitter>());
 			if(WirelessSystem.Links.ContainsKey(new Point16(i, j + 1)))
 			{
 				ModContent.GetInstance<Wireless>().SyncRemoveLink(new Point16(i, j + 1));

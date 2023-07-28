@@ -21,11 +21,6 @@ namespace Wireless.Tiles
 			TileObjectData.addTile(Type);
 		}
 		
-		public override void KillMultiTile(int i, int j, int frameX, int frameY)
-		{
-			Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 32, ModContent.ItemType<Items.WirelessReceiver>());
-		}
-		
 		public override void MouseOver(int i, int j)
 		{
 			var player = Main.player[Main.myPlayer];

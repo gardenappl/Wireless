@@ -5,20 +5,31 @@ Mods: {
 		SuccessLink: Linked successfully!
 		StartLink: Starting link...
 
-		ItemName: {
-			WirelessReceiver: Wireless Receiver
-			WirelessTransmitter: Wireless Transmitter
-			WirelessTransceiver: Wireless Transceiver
-			WirelessRemote: Wireless Remote
-			CoordinateConfigurator: Coordinate Configurator
-		}
+		Items: {
+			WirelessReceiver: {
+				DisplayName: Wireless Receiver
+				Tooltip: Receives signals from linked Wireless Transmitters and Remotes
+			}
 
-		ItemTooltip: {
-			WirelessTransmitter: Sends signals to a linked Wireless Receiver
-			CoordinateConfigurator: Links Wireless Transmitters to Wireless Receivers
-			WirelessReceiver: Receives signals from linked Wireless Transmitters and Remotes
-			WirelessRemote: Sends signals to a linked Wireless Receiver
-			WirelessTransceiver: Sends and receives signals from linked devices
+			WirelessTransmitter: {
+				DisplayName: Wireless Transmitter
+				Tooltip: Sends signals to a linked Wireless Receiver
+			}
+
+			WirelessTransceiver: {
+				DisplayName: Wireless Transceiver
+				Tooltip: Sends and receives signals from linked devices
+			}
+
+			WirelessRemote: {
+				DisplayName: Wireless Remote
+				Tooltip: Sends signals to a linked Wireless Receiver
+			}
+
+			CoordinateConfigurator: {
+				DisplayName: Coordinate Configurator
+				Tooltip: Links Wireless Transmitters to Wireless Receivers
+			}
 		}
 	}
 }
