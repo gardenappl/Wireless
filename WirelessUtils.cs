@@ -36,6 +36,25 @@ namespace Wireless
 				return (tile.TileType == ModContent.TileType<Tiles.WirelessTransmitter>()) || (tile.TileType == ModContent.TileType<Tiles.WirelessTransceiver>());
 			return false;
 		}
+		public static bool ActivateReceiver(Point16 receiver)
+		{
+			bool activated = false;
+			if (IsReceiver(receiver))
+			{
+				Wiring.TripWire(receiver.X, receiver.Y, 1, 2);
+				activated = true;
+				Tile tile = Main.tile[receiver.X, receiver.Y];
+				if (tile.TileType == ModContent.TileType<Tiles.WirelessTransceiver>() && WirelessSystem.Links.ContainsKey(receiver))
+				{
+					if (IsReceiver(WirelessSystem.Links[receiver]))
+					{
+						Wiring.TripWire(WirelessSystem.Links[receiver].X, WirelessSystem.Links[receiver].Y, 1, 2);
+						activated = true;
+					}
+				}
+			}
+			return activated;
+		}
 
 		public static bool AlreadyExists(Point16 transmitter, Point16 reciever)
         {
