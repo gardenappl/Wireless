@@ -29,136 +29,92 @@ namespace Wireless.Tiles
 				if (WirelessUtils.IsReceiver(coord))
 				{
 					//Code below is copied and adapted from Wiring.HitWire()
-					for (int side = 0; side < 4; side++)
+					for (int direction = 0; direction < 4; direction++)
 					{
-						int nextI;
-						int nextJ;
-						switch (side)
+						int CurrentX;
+						int CurrentY;
+						switch (direction)
 						{
 							case 0:
-								nextI = coord.X;
-								nextJ = coord.Y + 1;
+								CurrentX = coord.X;
+								CurrentY = coord.Y + 1;
 								break;
 							case 1:
-								nextI = coord.X;
-								nextJ = coord.Y - 1;
+								CurrentX = coord.X;
+								CurrentY = coord.Y - 1;
 								break;
 							case 2:
-								nextI = coord.X + 1;
-								nextJ = coord.Y;
+								CurrentX = coord.X + 1;
+								CurrentY = coord.Y;
 								break;
 							case 3:
-								nextI = coord.X - 1;
-								nextJ = coord.Y;
+								CurrentX = coord.X - 1;
+								CurrentY = coord.Y;
 								break;
 							default:
-								nextI = coord.X;
-								nextJ = coord.Y + 1;
+								CurrentX = coord.X;
+								CurrentY = coord.Y + 1;
 								break;
 						}
-						if (nextI >= 2 && nextI < Main.maxTilesX - 2 && nextJ >= 2 && nextJ < Main.maxTilesY - 2)
+						if (CurrentX >= 2 && CurrentX < Main.maxTilesX - 2 && CurrentY >= 2 && CurrentY < Main.maxTilesY - 2)
 						{
-							var tile = Main.tile[nextI, nextJ];
-							if (tile.HasTile)
+							Tile CurrentWire = Main.tile[CurrentX, CurrentY];
+							if (CurrentWire.HasTile)
 							{
-								var receiverTile = Main.tile[coord.X, coord.Y];
-								if (receiverTile.HasTile)
+								Tile RecieverTile = Main.tile[coord.X, coord.Y];
+								if (RecieverTile.HasTile)
 								{
-									byte b = 4;
-									if (tile.TileType == TileID.WirePipe || tile.TileType == TileID.PixelBox)
+									byte flags = 3;
+									if (CurrentWire.TileType == TileID.WirePipe)
 									{
-										b = 0;
+										flags = 0;
 									}
-//										if (receivertile.TileType == TileID.WirePipe)
-//										{
-//											switch (receivertile.TileFrameX / 18)
-//											{
-//												case 0:
-//													if (side != wireDirection)
-//													{
-//														goto IL_315;
-//													}
-//													break;
-//												case 1:
-//													if ((wireDirection != 0 || side != 3) && (wireDirection != 3 || side != 0) && (wireDirection != 1 || side != 2))
-//													{
-//														if (wireDirection != 2)
-//														{
-//															goto IL_315;
-//														}
-//														if (side != 1)
-//														{
-//															goto IL_315;
-//														}
-//													}
-//													break;
-//												case 2:
-//													if ((wireDirection != 0 || side != 2) && (wireDirection != 2 || side != 0) && (wireDirection != 1 || side != 3) && (wireDirection != 3 || side != 1))
-//													{
-//														goto IL_315;
-//													}
-//													break;
-//											}
-//										}
-//										if (receivertile.TileType == TileID.PixelBox)
-//										{
-//											if (side != wireDirection)
-//											{
-//												goto IL_315;
-//											}
-//											if (Wiring._PixelBoxTriggers.ContainsKey(point2))
-//											{
-//												Dictionary<Point16, byte> pixelBoxTriggers;
-//												Point16 key;
-//												(pixelBoxTriggers = Wiring._PixelBoxTriggers)[key = point2] = (pixelBoxTriggers[key] | ((side == 0 | side == 1) ? 2 : 1));
-//											}
-//											else
-//											{
-//												Wiring._PixelBoxTriggers[point2] = ((side == 0 | side == 1) ? 2 : 1);
-//											}
-//										}
-									bool flag;
+									if (RecieverTile.TileType == TileID.WirePipe)
+									{
+
+                                    }
+									bool HasWire;
 									switch (Wiring._currentWireColor)
 									{
 										case 1:
-											flag = tile.RedWire; // Tile.Wire()
+											HasWire = CurrentWire.RedWire;
 											break;
 										case 2:
-											flag = tile.BlueWire;
+											HasWire = CurrentWire.BlueWire;
 											break;
 										case 3:
-											flag = tile.GreenWire;
+											HasWire = CurrentWire.GreenWire;
 											break;
 										case 4:
-											flag = tile.YellowWire;
+											HasWire = CurrentWire.YellowWire;
 											break;
 										default:
-											flag = false;
+											HasWire = false;
 											break;
 									}
-									if (flag)
+									if (HasWire)
 									{
-										var point3 = new Point16(nextI, nextJ);
-										byte b2;
-										if (Wiring._toProcess.TryGetValue(point3, out b2))
+										Point16 CurrentWirePoint = new Point16(CurrentX, CurrentY);
+										byte value;
+										if (Wiring._toProcess.TryGetValue(CurrentWirePoint, out value))
 										{
-											b2 -= 1;
-											if (b2 == 0)
+											value -= 1;
+											if (value == 0)
 											{
-												Wiring._toProcess.Remove(point3);
+												Wiring._toProcess.Remove(CurrentWirePoint);
 											}
 											else
 											{
-												Wiring._toProcess[point3] = b2;
+												Wiring._toProcess[CurrentWirePoint] = value;
 											}
 										}
 										else
 										{
-											Wiring._wireList.PushBack(point3);
-											Wiring._wireDirectionList.PushBack((byte)side);
-											if (b > 0)
+											Wiring._wireList.PushBack(CurrentWirePoint);
+											Wiring._wireDirectionList.PushBack((byte)direction);
+											if (flags > 0)
 											{
-												Wiring._toProcess.Add(point3, b);
+												Wiring._toProcess.Add(CurrentWirePoint, flags);
 											}
 										}
 									}
@@ -180,11 +136,11 @@ namespace Wireless.Tiles
 		
 		public override bool RightClick(int i, int j)
 		{
-            if (Main.tile[i, j].TileFrameY == 18 && WirelessSystem.Links.ContainsKey(new Point16(i, j)))
+			if (Main.tile[i, j].TileFrameY == 18 && WirelessSystem.Links.ContainsKey(new Point16(i, j)))
             {
                 var coord = WirelessSystem.Links[new Point16(i, j)];
 				//				Wiring.TripWire(i, j, 1, 1);
-			    Vector2? position = new(i * 16, j * 16);
+				Vector2? position = new(i * 16, j * 16);
 			    SoundEngine.PlaySound(SoundID.Mech, position);
 			    ModContent.GetInstance<Wireless>().SyncActivate(coord);
                 return true;

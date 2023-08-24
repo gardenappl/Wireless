@@ -9,7 +9,7 @@ namespace Wireless
 {
     public class Wireless : Mod
 	{
-		public enum MessageType : byte
+        public enum MessageType : byte
 		{
 			AddLink,
 			RemoveLink,
@@ -41,7 +41,7 @@ namespace Wireless
 					break;
 				case MessageType.TripWire:
 					receiver = new Point16(reader.ReadInt16(), reader.ReadInt16());
-					ActivateReceiver(receiver);
+					TryAndActivateReceiver(receiver);
 					
 					if(Main.netMode == NetmodeID.Server)
 						RemoteClient.CheckSection(whoAmI, receiver.ToWorldCoordinates());
@@ -89,37 +89,13 @@ namespace Wireless
 			}
 			else
 			{
-//				if(WirelessUtils.IsReceiver(receiver, this))
-//				{
-//					Wiring.TripWire(receiver.X, receiver.Y, 1, 1);
-//					int currentColor = Wiring._currentWireColor;
-//					for(int i = 1; i <= 4; i++)
-//					{
-//						Wiring._currentWireColor = i;
-//						if(Main.tile[receiver.X, receiver.Y].type == TileType(Names.WirelessTransceiver))
-//							GetTile(Names.WirelessTransceiver).HitWire(receiver.X, receiver.Y);
-//					}
-//					Wiring._currentWireColor = currentColor;
-//				}
-				ActivateReceiver(receiver);
+				TryAndActivateReceiver(receiver);
 			}
 		}
 		
-		void ActivateReceiver(Point16 receiver)
+		void TryAndActivateReceiver(Point16 receiver)
 		{
-			if(WirelessUtils.IsReceiver(receiver))
-			{   
-                Wiring.TripWire(receiver.X, receiver.Y, 1, 1);
-                Tile tile = Main.tile[receiver.X, receiver.Y];
-                if (tile.TileType == ModContent.TileType<Tiles.WirelessTransceiver>() && WirelessSystem.Links.ContainsKey(receiver))
-                {
-                    if (WirelessUtils.IsReceiver(WirelessSystem.Links[receiver]))
-                    {
-                        Wiring.TripWire(WirelessSystem.Links[receiver].X, WirelessSystem.Links[receiver].Y, 1, 1);
-                    }
-                }
-			}
-            else
+			if(!WirelessUtils.ActivateReceiver(receiver))
             {
                 SyncRemoveLink(receiver);
             }
